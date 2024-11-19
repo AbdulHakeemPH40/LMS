@@ -1,0 +1,48 @@
+/* Responsive Design for Create Course Form */
+
+/* General Form Styling */
+form .form-control, form .form-control-file {
+    border-radius: 8px;
+    padding: 10px;
+    background-color: var(--navbar-background);
+    color: var(--text-color);
+}
+
+
+/* Adjust Form Layout on Small Screens */
+@media (max-width: 768px) {
+    /* Stack Title and Label Fields */
+    .row.g-3 {
+        flex-direction: column;
+    }
+
+    .row.g-3 .col-md-6 {
+        margin-bottom: 1rem; /* Add spacing between fields */
+    }
+
+    /* Full-width inputs for better usability */
+    .form-control, .form-control-file {
+        width: 100%;
+    }
+
+    button[type="submit"] {
+        padding: 10px;
+        font-size: 1rem;
+    }
+}
+
+/* Extra Small Screens */
+@media (max-width: 576px) {
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    .card {
+        padding: 15px;
+    }
+
+    button[type="submit"] {
+        font-size: 0.9rem;
+        padding: 8px;
+    }
+}

@@ -1,0 +1,87 @@
+<!-- adminpanel/templates/adminpanel/manage_mentors.html -->
+{% extends 'adminpanel/admin_base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %}Manage Mentors{% endblock %}
+
+{% block custom_css %}
+<link rel="stylesheet" href="{% static 'adminpanel/css/manage_mentors.css' %}">
+<link rel="stylesheet" href="{% static 'adminpanel/css/footer.css' %}">
+<link rel="stylesheet" href="{% static 'adminpanel/css/left_sidebar.css' %}">
+<link rel="stylesheet" href="{% static 'adminpanel/css/nav_bar.css' %}">
+<link rel="stylesheet" href="{% static 'adminpanel/css/messages.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="main-content">
+    <div class="container mt-5">
+        <div class="d-flex justify-content-between align-items-center mb-4 header-flex flex-wrap">
+            <h2 class="mb-0">Manage Mentors</h2>
+            <a href="{% url 'add_mentor' %}" class="btn btn-primary mt-2 mt-md-0">
+                <i class="fas fa-user-plus me-2"></i> Add Mentor
+            </a>
+        </div>
+
+        {% if mentors %}
+            <div class="table-responsive">
+                <table class="table table-striped table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Profile Image</th>
+                            <th>Name</th>
+                            <th class="d-none d-md-table-cell">Skills</th>
+                            <th class="d-none d-md-table-cell">Experience</th>
+                            <th class="text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for mentor in mentors %}
+                            <tr>
+                                <td>
+                                    {% if mentor.profile_image %}
+                                        <img src="{{ mentor.profile_image.url }}" class="profile-image" alt="Profile Image">
+                                    {% else %}
+                                        <span>No Image</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ mentor.user.get_full_name }}</td>
+                                <td class="d-none d-md-table-cell">{{ mentor.skills }}</td>
+                                <td class="d-none d-md-table-cell">{{ mentor.experience }}</td>
+                                <td class="text-center">
+                                    <div class="action-buttons">
+                                        <a href="{% url 'view_mentor' mentor.id %}" class="btn btn-sm btn-outline-info me-2 mb-2 mb-md-0" data-bs-toggle="tooltip" title="View Mentor">
+                                            <i class="fas fa-eye"></i> <span class="d-none d-md-inline">View</span>
+                                        </a>
+                                        <a href="{% url 'edit_mentor' mentor.id %}" class="btn btn-sm btn-outline-warning me-2 mb-2 mb-md-0" data-bs-toggle="tooltip" title="Edit Mentor">
+                                            <i class="fas fa-edit"></i> <span class="d-none d-md-inline">Edit</span>
+                                        </a>
+                                        <form action="{% url 'delete_mentor' mentor.id %}" method="POST" style="display:inline;">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-sm btn-outline-danger mb-2 mb-md-0" data-bs-toggle="tooltip" title="Delete Mentor">
+                                                <i class="fas fa-trash-alt"></i> <span class="d-none d-md-inline">Delete</span>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <p class="text-muted text-center">No mentors available. Please add a mentor.</p>
+        {% endif %}
+    </div>
+</div>
+
+{% block extra_scripts %}
+<script>
+    // Initialize tooltips
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+</script>
+{% endblock %}
+{% endblock %}

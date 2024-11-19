@@ -1,0 +1,363 @@
+/* Light Mode */
+:root {
+    --primary-color: #2575fc;
+    --secondary-color: #6a11cb;
+    --navbar-background: rgba(255, 255, 255, 0.95);
+    --navbar-text-color: #333;
+    --sidebar-background-light: #e9e9e9; /* Biscuit color */
+    --sidebar-background-dark: #11101D; /* Dark color */
+    --sidebar-text-color-light: #333;
+    --sidebar-text-color-dark: #fff;
+    --background-color: #ffffff; /* Light background */
+    --text-color: #333333;
+    --card-background: #ffffff;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --overlay-color: rgba(0, 0, 0, 0.6);
+    --link-hover-color: #0056b3;
+}
+
+/* Dark Mode */
+[data-theme="dark"] {
+    --primary-color: #0d6efd;
+    --secondary-color: #1e3a8a;
+    --navbar-background: #1f1f1f;
+    --navbar-text-color: #e9ecef;
+    --sidebar-background-light: #11101D; /* Override to dark */
+    --sidebar-background-dark: #11101D;
+    --sidebar-text-color-light: #fff; /* Override to light */
+    --sidebar-text-color-dark: #fff;
+    --background-color: #121212; /* Dark background */
+    --text-color: #f1f1f1;
+    --card-background: #1e1e1e;
+    --shadow-color: rgba(0, 0, 0, 0.5);
+    --overlay-color: rgba(255, 255, 255, 0.2);
+    --link-hover-color: #66aaff;
+}
+/* General Styles */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+/* Navbar Styles */
+.navbar {
+    background-color: var(--navbar-background);
+    box-shadow: 0 4px 12px var(--shadow-color);
+    z-index: 1000; /* Ensure navbar is above other elements */
+    height: 60px;
+}
+
+.navbar-brand {
+    font-weight: bold;
+    color: var(--navbar-text-color);
+}
+
+.navbar-nav .nav-link {
+    font-size: 16px;
+    color: var(--navbar-text-color);
+}
+
+.navbar-brand:hover {
+    color: var(--navbar-hover-color); /* Change color on hover */
+    text-decoration: none; /* Remove underline on hover */
+    transition: color 0.3s ease-in-out; /* Ensure smooth transition */
+}
+
+.profile-image {
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.page-layout {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    margin-top: 60px; /* Navbar height */
+  }
+
+/* Sidebar Styles */
+.left-sidebar {
+    position: fixed;
+    top: 60px; /* Below navbar */
+    left: 0;
+    height: calc(100% - 60px);
+    width: 78px; /* Collapsed width */
+    background: var(--sidebar-background-light);
+    color: var(--sidebar-text-color-light);
+    padding: 10px 14px;
+    z-index: 999; /* Below navbar */
+    transition: width 0.3s ease, background 0.3s ease, color 0.3s ease;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+
+[data-theme="dark"] .left-sidebar {
+    background: var(--sidebar-background-dark);
+    color: var(--sidebar-text-color-dark);
+}
+
+.left-sidebar.open {
+    width: 250px; /* Expanded width */
+}
+
+/* Logo Details */
+.left-sidebar .logo-details {
+    height: 60px;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.left-sidebar .logo-details .icon {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+/* Sidebar Logo Name */
+.left-sidebar .logo-details .logo_name {
+    color: var(--sidebar-text-color-light); /* Default to light mode color */
+    font-size: 20px;
+    font-weight: 600;
+    opacity: 0;
+    transition: opacity 0.5s ease, color 0.5s ease; /* Transition both opacity and color */
+    margin-left: 10px;
+}
+
+/* When in dark mode */
+[data-theme="dark"] .left-sidebar .logo-details .logo_name {
+    color: var(--sidebar-text-color-dark); /* Change color in dark mode */
+}
+
+
+.left-sidebar.open .logo-details .icon,
+.left-sidebar.open .logo-details .logo_name {
+    opacity: 1;
+}
+
+.left-sidebar .logo-details #btn {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    font-size: 23px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.5s ease;
+}
+
+.left-sidebar.open .logo-details #btn {
+    transform: translateY(-50%) rotate(180deg);
+}
+
+/* Nav List */
+.left-sidebar .nav-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+    flex-grow: 1;
+}
+
+.left-sidebar .nav-list li {
+    position: relative;
+    margin: 15px 0;
+}
+
+.left-sidebar .nav-list li a {
+    display: flex;
+    align-items: center;
+    height: 50px;
+    color: inherit;
+    padding: 0 15px;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background 0.3s, color 0.3s;
+}
+
+.left-sidebar .nav-list li a:hover {
+    background: rgba(0, 0, 0, 0.1);
+    color: var(--primary-color);
+}
+
+.left-sidebar .nav-list li a .links_name {
+    margin-left: 15px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+}
+
+.left-sidebar.open .nav-list li a .links_name {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Sidebar Icons */
+.left-sidebar .nav-list li a i {
+    min-width: 25px;
+    text-align: center;
+    font-size: 20px;
+}
+
+/* Tooltips */
+.left-sidebar .nav-list li .tooltip {
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #fff;
+    color: #11101D;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+}
+
+.left-sidebar .nav-list li:hover .tooltip {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.left-sidebar.open .nav-list li .tooltip {
+    display: none;
+}
+
+/* Search Input */
+.left-sidebar .nav-list li .search {
+    display: flex;
+    align-items: center;
+}
+
+.left-sidebar .nav-list li .search input {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    outline: none;
+    margin-left: 10px;
+    width: 100%;
+    display: none;
+    transition: width 0.3s;
+}
+
+.left-sidebar.open .nav-list li .search input {
+    display: block;
+}
+
+/* Main Content */
+.main-content {
+    margin-left: 78px; /* Collapsed sidebar width */
+    padding: 20px;
+    transition: margin-left 0.3s ease, width 0.3s ease;
+    width: calc(100% - 78px);
+    display: flex;
+    flex-direction: column;
+}
+
+.left-sidebar.open + .main-content {
+    margin-left: 250px; /* Expanded sidebar width */
+    width: calc(100% - 250px);
+}
+
+/* Checkout Section */
+.checkout-section {
+    background: url('https://images.unsplash.com/photo-1563013544-824ae1b704d3') center/cover;
+    padding: 80px 0;
+}
+
+.checkout-container {
+    background-color: var(--card-background);
+    box-shadow: 0 4px 12px var(--shadow-color);
+    border-radius: 15px;
+    padding: 30px;
+    max-width: 900px;
+    margin: auto;
+    margin-top: 25px;
+}
+
+.payment-section {
+    display: flex;
+    justify-content: space-between;
+}
+
+.plan-details, .payment-details {
+    background-color: var(--card-background);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 12px var(--shadow-color);
+    width: 48%;
+}
+
+.plan-details h3, .payment-details h3 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+.plan-summary p {
+    margin-bottom: 15px;
+}
+
+/* Form Styling */
+.form-control {
+    padding: 15px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 5px rgba(37, 117, 252, 0.5);
+}
+
+.secure-checkbox {
+    margin-top: 20px;
+}
+
+.start-trial .btn {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 15px;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+.start-trial .btn:hover {
+    background-color: #3746b3;
+}
+
+.start-trial p {
+    font-size: 0.9rem;
+    color: var(--secondary-color);
+    text-align: center;
+    margin-top: 15px;
+}
+
+/* Footer */
+.footer {
+    background-color: var(--navbar-background);
+    color: var(--text-color);
+    padding: 20px;
+    text-align: center;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .payment-section {
+        flex-direction: column;
+    }
+
+    .plan-details, .payment-details {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+}

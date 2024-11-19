@@ -1,0 +1,37 @@
+{% extends 'adminpanel/admin_base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %}Add Lesson{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-body">
+            <h2 class="card-title text-primary">
+                Add New Lesson to Module: <strong>{{ module.title }}</strong> | Course: <strong>{{ course.title }}</strong>
+            </h2>
+
+            <form method="POST" enctype="multipart/form-data" id="lesson-form">
+                {% csrf_token %}
+
+                <h3>Lesson Information</h3>
+                {% for field in lesson_form %}
+                    <div class="mb-3">
+                        <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                        {{ field|add_class:"form-control" }}
+                        {% if field.help_text %}
+                            <small class="form-text text-muted">{{ field.help_text }}</small>
+                        {% endif %}
+                        {% for error in field.errors %}
+                            <div class="alert alert-danger">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+
+                <button type="submit" class="btn btn-primary w-100">Add Lesson</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

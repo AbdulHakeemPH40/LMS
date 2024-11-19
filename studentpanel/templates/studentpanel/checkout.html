@@ -1,0 +1,35 @@
+{% extends 'studentpanel/student_base.html' %}
+{% load static %}
+
+{% block title %}Checkout - {{ course.title }}{% endblock %}
+
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Enroll in {{ course.title }}</h2>
+    <div class="card mt-4">
+        <div class="card-body">
+            <h4>Course Price: ₹{{ course.price }}</h4>
+
+            <!-- Coupon Code Application Form -->
+            <form method="post" action="{% url 'checkout' course.id %}">
+                {% csrf_token %}
+                <div class="form-group mt-3">
+                    <label for="coupon_code">Coupon Code (if available)</label>
+                    <input type="text" name="coupon_code" id="coupon_code" class="form-control" placeholder="Enter coupon code" maxlength="12">
+                </div>
+            
+                <button type="submit" class="btn btn-primary mt-3">Enroll Now</button>
+            </form>
+            
+
+            <!-- Enrollment Message if Already Enrolled -->
+            {% if user_has_access %}
+                <div class="alert alert-info mt-3">
+                    <strong>Note:</strong> You are already enrolled in this course.
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

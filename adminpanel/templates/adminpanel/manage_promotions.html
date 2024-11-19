@@ -1,0 +1,42 @@
+{% extends 'adminpanel/admin_base.html' %}
+{% load static %}
+
+{% block title %}Manage Promotions | Admin Dashboard{% endblock %}
+
+{% block content %}
+<div class="container mt-5 pt-4">
+    <h2 class="text-center mb-4">Manage Promotions</h2>
+
+    <div class="mb-4">
+        <a href="{% url 'create_promotion' %}" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Create New Promotion
+        </a>
+    </div>
+
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Course</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for promo in promotions %}
+            <tr>
+                <td>{{ promo.title }}</td>
+                <td>{{ promo.course.title }}</td>
+                <td>{{ promo.is_active|yesno:"Active,Inactive" }}</td>
+                <td>
+                    <a href="{% url 'edit_promotion' promo.id %}" class="btn btn-warning">Edit</a>
+                    <a href="{% url 'toggle_promotion_status' promo.id %}" class="btn {% if promo.is_active %}btn-danger{% else %}btn-success{% endif %}">
+                        {% if promo.is_active %}Deactivate{% else %}Activate{% endif %}
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

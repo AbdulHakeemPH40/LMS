@@ -1,0 +1,448 @@
+/* Google Font Link */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
+
+/* 4. Fix box-sizing typo */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+  }
+  
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color); /* Ensuring text color matches mode */
+}
+
+/* Light Mode (default) */
+:root {
+    --primary-color: #4CAF50; /* Light green primary */
+    --secondary-color: #66BB6A; /* Lighter green */
+    --navbar-background: rgba(255, 255, 255, 0.95);
+    --navbar-text-color: #333;
+    --sidebar-background-light: #e9f5e9; /* Very light green */
+    --sidebar-background-dark: #11101D;
+    --sidebar-text-color-light: #333;
+    --sidebar-text-color-dark: #fff;
+    --background-color: #ffffff; /* Light background */
+    --text-color: #333333;
+    --card-background: #ffffff;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --overlay-color: rgba(0, 0, 0, 0.6);
+    --link-hover-color: #388E3C; /* Darker green for link hover */
+    --progress-bar-color: #66BB6A; /* Light green progress bar */
+    --button-hover-color: #388E3C; /* Darker green on hover */
+    --button-text-color: #ffffff; /* White text for buttons */
+}
+
+/* Dark Mode */
+[data-theme="dark"] {
+    --primary-color: #81C784; /* Light green */
+    --secondary-color: #4CAF50; /* Darker green for contrast */
+    --navbar-background: #1f1f1f;
+    --navbar-text-color: #333;
+    --sidebar-background-light: #11101D; /* Darker green sidebar */
+    --sidebar-background-dark: #11101D;
+    --sidebar-text-color-light: #e0e0e0;
+    --sidebar-text-color-dark: #ffffff;
+    --background-color: #121212; /* Dark background */
+    --text-color: #f1f1f1;
+    --card-background: #1e1e1e;
+    --shadow-color: rgba(0, 0, 0, 0.5);
+    --overlay-color: rgba(255, 255, 255, 0.2);
+    --link-hover-color: #81C784; /* Light green for link hover */
+    --progress-bar-color: #4CAF50; /* Green progress bar */
+    --button-hover-color: #66BB6A; /* Lighter green on hover */
+    --button-text-color: #ffffff; /* White text for buttons */
+}
+
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensure it covers the full height of the viewport */
+  }
+
+/* Dark Mode */
+
+/* Navbar Styles */
+.navbar {
+    background-color: var(--navbar-background);
+    box-shadow: 0 4px 12px var(--shadow-color);
+    z-index: 1000; /* Ensure navbar is above other elements */
+    height: 60px;
+}
+
+.navbar-brand {
+    font-weight: bold;
+    color: var(--navbar-text-color);
+}
+
+.navbar-nav .nav-link {
+    font-size: 16px;
+    color: var(--navbar-text-color);
+}
+
+.navbar-brand:hover {
+    color: var(--navbar-hover-color); /* Change color on hover */
+    text-decoration: none; /* Remove underline on hover */
+    transition: color 0.3s ease-in-out; /* Ensure smooth transition */
+}
+
+.profile-image {
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+/* Page Layout */
+.page-layout {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    margin-top: 60px; /* Navbar height */
+  }
+
+/* Sidebar Styles */
+.left-sidebar {
+    position: fixed;
+    top: 60px; /* Below navbar */
+    left: 0;
+    height: calc(100% - 60px);
+    width: 78px; /* Collapsed width */
+    background: var(--sidebar-background-light);
+    color: var(--sidebar-text-color-light);
+    padding: 10px 14px;
+    z-index: 999; /* Below navbar */
+    transition: width 0.3s ease, background 0.3s ease, color 0.3s ease;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+
+[data-theme="dark"] .left-sidebar {
+    background: var(--sidebar-background-dark);
+    color: var(--sidebar-text-color-dark);
+}
+
+.left-sidebar.open {
+    width: 250px; /* Expanded width */
+}
+
+/* Logo Details */
+.left-sidebar .logo-details {
+    height: 60px;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.left-sidebar .logo-details .icon {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+/* Sidebar Logo Name */
+.left-sidebar .logo-details .logo_name {
+    color: var(--sidebar-text-color-light); /* Default to light mode color */
+    font-size: 20px;
+    font-weight: 600;
+    opacity: 0;
+    transition: opacity 0.5s ease, color 0.5s ease; /* Transition both opacity and color */
+    margin-left: 10px;
+}
+
+/* When in dark mode */
+[data-theme="dark"] .left-sidebar .logo-details .logo_name {
+    color: var(--sidebar-text-color-dark); /* Change color in dark mode */
+}
+
+
+.left-sidebar.open .logo-details .icon,
+.left-sidebar.open .logo-details .logo_name {
+    opacity: 1;
+}
+
+.left-sidebar .logo-details #btn {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    font-size: 23px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.5s ease;
+}
+
+.left-sidebar.open .logo-details #btn {
+    transform: translateY(-50%) rotate(180deg);
+}
+
+/* Nav List */
+.left-sidebar .nav-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+    flex-grow: 1;
+}
+
+.left-sidebar .nav-list li {
+    position: relative;
+    margin: 15px 0;
+}
+
+.left-sidebar .nav-list li a {
+    display: flex;
+    align-items: center;
+    height: 50px;
+    color: inherit;
+    padding: 0 15px;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background 0.3s, color 0.3s;
+}
+
+.left-sidebar .nav-list li a:hover {
+    background: rgba(0, 0, 0, 0.1);
+    color: var(--primary-color);
+}
+
+.left-sidebar .nav-list li a .links_name {
+    margin-left: 15px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+}
+
+.left-sidebar.open .nav-list li a .links_name {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Sidebar Icons */
+.left-sidebar .nav-list li a i {
+    min-width: 25px;
+    text-align: center;
+    font-size: 20px;
+}
+
+/* Tooltips */
+.left-sidebar .nav-list li .tooltip {
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #fff;
+    color: #11101D;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+}
+
+.left-sidebar .nav-list li:hover .tooltip {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.left-sidebar.open .nav-list li .tooltip {
+    display: none;
+}
+
+/* Search Input */
+.left-sidebar .nav-list li .search {
+    display: flex;
+    align-items: center;
+}
+
+.left-sidebar .nav-list li .search input {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    outline: none;
+    margin-left: 10px;
+    width: 100%;
+    display: none;
+    transition: width 0.3s;
+}
+
+.left-sidebar.open .nav-list li .search input {
+    display: block;
+}
+
+/* Main Content */
+.main-content {
+    margin-left: 78px; /* Collapsed sidebar width */
+    padding: 20px;
+    transition: margin-left 0.3s ease, width 0.3s ease;
+    width: calc(100% - 78px);
+    display: flex;
+    flex-direction: column;
+}
+
+.left-sidebar.open + .main-content {
+    margin-left: 250px; /* Expanded sidebar width */
+    width: calc(100% - 250px);
+}
+
+
+.quiz-container {
+    max-width: 600px;
+    margin: 50px auto;
+    background: #fff;
+    padding: 40px;
+    border-radius: var(--border-radius);
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    color: var(--navbar-text-color);
+}
+
+.quiz-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.quiz-header h1 {
+    color: var(--primary-color);
+}
+
+.quiz-header p {
+    color: var(--navbar-text-color);
+}
+
+.progress-bar {
+    width: 100%;
+    background-color: #e0e0e0;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    height: 8px;
+    margin: 10px 0;
+}
+
+.progress {
+    width: 0%;
+    height: 100%;
+    background-color: var(--primary-color);
+    transition: width 0.3s ease-in-out;
+}
+
+.quiz-navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.nav-button, .submit-button, .retake-button {
+    padding: 12px 20px;
+    background-color: var(--button-hover-color);
+    color:var(--navbar-text-color);
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin: 5px;
+}
+
+.nav-button:hover, .submit-button:hover, .retake-button:hover {
+    background-color: var(--button-hover-color);
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 1rem;
+    text-align: left;
+    padding-left: 20px;
+    position: relative;
+}
+
+label input {
+    margin-right: 10px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    transform: translateY(5px);
+}
+
+.result-display {
+    display: none;
+    text-align: center;
+    padding: 20px;
+    background: #fff;
+    border-radius: var(--border-radius);
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 50px auto;
+}
+
+.result-display h2 {
+    color: var(--primary-color);
+}
+
+.result-display p {
+    font-size: 1.2rem;
+    color: var(--text-color);
+}
+
+.footer {
+    background-color: var(--navbar-background);
+    color: var(--text-color);
+    padding: 10px 0;
+    width: 100%;
+    height: 95px;
+    text-align: center;
+    position: relative;
+    bottom: 0;
+}
+
+  
+.footer p {
+    margin-bottom: 10px;
+}
+
+.footer .social-icons a {
+    color:white;
+    margin: 0 10px;
+    font-size: 20px;
+    transition: color 0.3s;
+  }
+  
+
+  .footer .social-icons a:hover {
+    color: var(--primary-color);
+  }
+  
+/* Responsive Design */
+@media (max-width: 768px) {
+    .quiz-container {
+        padding: 20px;
+        margin: 20px;
+    }
+
+    .quiz-header h1 {
+        font-size: 1.5rem;
+    }
+
+    label {
+        font-size: 1rem;
+    }
+
+    .nav-button, .submit-button, .retake-button {
+        font-size: 0.9rem;
+        padding: 10px 15px;
+    }
+
+    .result-display {
+        width: 90%;
+        padding: 20px;
+    }
+}

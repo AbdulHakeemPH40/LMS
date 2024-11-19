@@ -1,0 +1,131 @@
+{% extends 'studentpanel/student_base.html' %}
+{% load static %}
+
+<title>
+{% block title %}Profile | Modern LMS Platform{% endblock %}
+</title>
+
+{% block custom_css %}
+    <link rel="stylesheet" href="{% static 'adminpanel/css/student_profile.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="profile-section py-5">
+    <div class="container">
+        <h2 class="text-center mb-4" style="color:white;">My Profile</h2>
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-md-10">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <!-- Profile Picture and Basic Info -->
+                        <div class="row align-items-center mb-4">
+                            <div class="profile-pic-wrapper">
+                                <img src="{% if user_profile.profile_image %}{{ user_profile.profile_image.url }}{% else %}{% static 'images/default_profile.png' %}{% endif %}" 
+                                     alt="Profile Picture of {{ user_profile.user.first_name }}" 
+                                     class="profile-pic" loading="lazy">
+                            </div>
+                            <div class="col-md-8">
+                                <h4>{{ user_profile.user.first_name }} {{ user_profile.user.last_name }}</h4>
+                                <p class="text-muted">{{ user_profile.user.email }}</p>
+                            </div>
+                        </div>
+
+                        <!-- Personal Information -->
+                        <h5>Personal Information</h5>
+                        <hr>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <strong>First Name:</strong>
+                                <p>{{ user_profile.user.first_name }}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <strong>Last Name:</strong>
+                                <p>{{ user_profile.user.last_name }}</p>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <strong>Username:</strong>
+                                <p>{{ user_profile.user.username }}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <strong>Email:</strong>
+                                <p>{{ user_profile.user.email }}</p>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <strong>Mobile Number:</strong>
+                                <p>{{ user_profile.phone }}</p>
+                            </div>
+                            <div class="col-md-6">
+                                <strong>Gender:</strong>
+                                <p>{{ user_profile.get_gender_display }}</p>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <strong>Date of Birth:</strong>
+                                <p>{{ user_profile.date_of_birth }}</p> <!-- Display Date of Birth -->
+                            </div>
+                        </div>
+
+                        <div class="text-end">
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editProfileModal">Edit Profile</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Edit Profile Modal -->
+<div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Profile</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <!-- First Name and Last Name fields in modal -->
+                    <div class="mb-3">
+                        <label for="first_name" class="form-label">First Name</label>
+                        {{ form.first_name }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="last_name" class="form-label">Last Name</label>
+                        {{ form.last_name }}
+                    </div>
+
+                    <!-- Profile Image, Phone, Gender, and Date of Birth fields -->
+                    <div class="mb-3">
+                        <label for="profile_image" class="form-label">Profile Image</label>
+                        {{ form.profile_image }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="phone" class="form-label">Phone</label>
+                        {{ form.phone }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="gender" class="form-label">Gender</label>
+                        {{ form.gender }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="date_of_birth" class="form-label">Date of Birth</label>
+                        {{ form.date_of_birth }}  <!-- Date of Birth field in modal -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

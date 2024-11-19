@@ -1,0 +1,133 @@
+<!-- adminpanel/templates/adminpanel/edit_course.html -->
+{% extends 'adminpanel/admin_base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block title %}Edit Course | Admin Panel{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'adminpanel/css/edit_course.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5 pt-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            <div class="card shadow-sm p-4 mb-5 bg-white rounded">
+                <div class="card-body">
+                    <h2 class="card-title text-center mb-4"> Edit Course</h2>
+                    <form method="POST" enctype="multipart/form-data" novalidate>
+                        {% csrf_token %}
+                        {{ form.non_field_errors }}
+
+                        <!-- Course Title -->
+                        <div class="form-floating mb-3">
+                            {{ form.title|add_class:"form-control" }}
+                            <label for="{{ form.title.id_for_label }}"><i class="bi bi-book-half"></i> Course Title</label>
+                            {{ form.title.errors }}
+                        </div>
+
+                        <!-- Course Description -->
+                        <div class="form-floating mb-3">
+                            {{ form.description|add_class:"form-control" }}
+                            <label for="{{ form.description.id_for_label }}"><i class="bi bi-file-text"></i> Course Description</label>
+                            {{ form.description.errors }}
+                        </div>
+
+                        <!-- Course Category -->
+                        <div class="form-floating mb-3">
+                            {{ form.category|add_class:"form-select" }}
+                            <label for="{{ form.category.id_for_label }}"><i class="bi bi-tags"></i> Course Category</label>
+                            {{ form.category.errors }}
+                        </div>
+
+                        <!-- Course Mentor -->
+                        <div class="form-floating mb-3">
+                            {{ form.mentor|add_class:"form-select" }}
+                            <label for="{{ form.mentor.id_for_label }}"><i class="bi bi-person-badge"></i> Course Mentor</label>
+                            {{ form.mentor.errors }}
+                        </div>
+
+                        <!-- Course Thumbnail -->
+                        <div class="mb-4">
+                            <label for="{{ form.thumbnail.id_for_label }}" class="form-label"><i class="bi bi-image"></i> Course Thumbnail</label>
+                            <div class="input-group">
+                                {{ form.thumbnail|add_class:"form-control" }}
+                                <button type="button" class="btn btn-outline-secondary" data-bs-toggle="tooltip" data-bs-placement="top" title="Upload an image file (e.g., .jpg, .png)">
+                                    <i class="bi bi-question-circle"></i>
+                                </button>
+                            </div>
+                            {% if form.thumbnail.errors %}
+                                <div class="text-danger mt-1">
+                                    {% for error in form.thumbnail.errors %}
+                                        <small>{{ error }}</small>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Course Curriculum -->
+                        <div class="mb-4">
+                            <label for="{{ form.curriculum.id_for_label }}" class="form-label"><i class="bi bi-file-earmark-pdf"></i> Course Curriculum (PDF)</label>
+                            <div class="input-group">
+                                {{ form.curriculum|add_class:"form-control" }}
+                                <button type="button" class="btn btn-outline-secondary" data-bs-toggle="tooltip" data-bs-placement="top" title="Upload a PDF file">
+                                    <i class="bi bi-question-circle"></i>
+                                </button>
+                            </div>
+                            {% if form.curriculum.errors %}
+                                <div class="text-danger mt-1">
+                                    {% for error in form.curriculum.errors %}
+                                        <small>{{ error }}</small>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Course Price -->
+                        <div class="form-floating mb-3">
+                            {{ form.price|add_class:"form-control" }}
+                            <label for="{{ form.price.id_for_label }}"><i class="bi bi-currency-dollar"></i> Course Price</label>
+                            {{ form.price.errors }}
+                        </div>
+
+                        <!-- Course Status -->
+                        <div class="form-floating mb-3">
+                            {{ form.status|add_class:"form-select" }}
+                            <label for="{{ form.status.id_for_label }}"><i class="bi bi-sliders"></i> Course Status</label>
+                            {{ form.status.errors }}
+                        </div>
+
+                        <!-- Course Duration Type -->
+                        <div class="form-floating mb-3">
+                            {{ form.duration_type|add_class:"form-select" }}
+                            <label for="{{ form.duration_type.id_for_label }}"><i class="bi bi-hourglass-split"></i> Duration Type</label>
+                            {{ form.duration_type.errors }}
+                        </div>
+
+                        <!-- Course Duration Value -->
+                        <div class="form-floating mb-4">
+                            {{ form.duration_value|add_class:"form-control" }}
+                            <label for="{{ form.duration_value.id_for_label }}"><i class="bi bi-clock"></i> Duration Value</label>
+                            {{ form.duration_value.errors }}
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-success btn-lg"><i class="bi bi-check-circle"></i> Update Course</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tooltip Initialization -->
+    <script>
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+          return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+    </script>
+</div>
+{% endblock %}

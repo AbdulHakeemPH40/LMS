@@ -1,0 +1,121 @@
+{% extends 'sitevisitor/base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %}Sign Up - LMS Platform{% endblock %}
+
+{% block custom_css %}
+    <link rel="stylesheet" href="{% static 'sitevisitor/css/sign_up.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="signup-section py-5">
+    <div class="container">
+        <h2 class="text-center mb-3">Create a New Account</h2>
+        <p class="text-center mb-5" style="color: white;">It's quick and easy.</p>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8">
+                <form method="POST" action="{% url 'sign_up' %}" class="signup-form">
+                    {% csrf_token %}
+
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            {{ form.non_field_errors }}
+                        </div>
+                    {% endif %}
+
+                    <!-- First Name -->
+                    <div class="mb-3">
+                        {{ form.first_name.label_tag }}
+                        {{ form.first_name|add_class:"form-control" }}
+                        {% if form.first_name.errors %}
+                            <div class="text-danger">
+                                {{ form.first_name.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Last Name -->
+                    <div class="mb-3">
+                        {{ form.last_name.label_tag }}
+                        {{ form.last_name|add_class:"form-control" }}
+                        {% if form.last_name.errors %}
+                            <div class="text-danger">
+                                {{ form.last_name.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Username -->
+                    <div class="mb-3">
+                        {{ form.username.label_tag }}
+                        {{ form.username|add_class:"form-control" }}
+                        {% if form.username.errors %}
+                            <div class="text-danger">
+                                {{ form.username.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Email -->
+                    <div class="mb-3">
+                        {{ form.email.label_tag }}
+                        {{ form.email|add_class:"form-control" }}
+                        {% if form.email.errors %}
+                            <div class="text-danger">
+                                {{ form.email.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Mobile Number -->
+                    <div class="mb-3">
+                        {{ form.mobile.label_tag }}
+                        {{ form.mobile|add_class:"form-control" }}
+                        {% if form.mobile.errors %}
+                            <div class="text-danger">
+                                {{ form.mobile.errors }}
+                            </div>
+                        {% endif %}
+                        <small class="form-text text-muted">Enter a 10-digit mobile number.</small>
+                    </div>
+
+                    <!-- Password -->
+                    <div class="mb-3">
+                        {{ form.password1.label_tag }}
+                        {{ form.password1|add_class:"form-control" }}
+                        {% if form.password1.errors %}
+                            <div class="text-danger">
+                                {{ form.password1.errors }}
+                            </div>
+                        {% endif %}
+                        <div class="form-text">Must be at least 8 characters long.</div>
+                    </div>
+
+                    <!-- Confirm Password -->
+                    <div class="mb-3">
+                        {{ form.password2.label_tag }}
+                        {{ form.password2|add_class:"form-control" }}
+                        {% if form.password2.errors %}
+                            <div class="text-danger">
+                                {{ form.password2.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+                    </div>
+
+                    <!-- Sign In Link -->
+                    <div class="text-center mt-3">
+                        <p>Already have an account? <a href="{% url 'sign_in' %}">Sign In</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,139 @@
+/* Navbar Styles */
+.navbar {
+    background-color: var(--navbar-background);
+    box-shadow: 0 4px 12px var(--shadow-color);
+    height: 60px;
+    z-index: 1000;
+    display: flex;
+    align-items: center; /* Vertically center items */
+    justify-content: space-between; /* Space between brand and nav items */
+    padding: 0 20px;
+    transition: background-color 0.3s ease;
+}
+
+/* Adjusted Navbar Content */
+.navbar-content {
+    display: flex;
+    align-items: center; /* Vertically center items */
+}
+
+/* Navbar Brand */
+.navbar-brand {
+    font-weight: bold;
+    color: var(--navbar-text-color);
+    font-size: 1.2rem;
+    text-decoration: none;
+    margin-right: 20px; /* Space between brand and nav items */
+}
+
+.navbar-brand:hover {
+    color: var(--link-hover-color);
+    transition: color 0.3s ease-in-out;
+}
+
+/* Navbar Navigation */
+.navbar-nav {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar-nav .nav-item {
+    margin-left: 20px;
+}
+
+.navbar-nav .nav-link {
+    font-size: 16px;
+    color: var(--navbar-text-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+    color: var(--primary-color);
+}
+
+/* Profile Image */
+.navbar-profile {
+    display: flex;
+    align-items: center;
+    margin-left: 20px; /* Space before profile image */
+}
+
+.profile-image {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 1px solid var(--navbar-background);
+    transition: transform 0.3s ease;
+}
+
+.profile-image:hover {
+    transform: scale(1.1);
+}
+
+/* Responsive Design */
+@media (max-width: 991px) {
+    .navbar {
+        flex-wrap: wrap;
+        padding: 10px;
+    }
+
+    .navbar-brand {
+        font-size: 1rem;
+        margin-bottom: 10px;
+    }
+
+    .navbar-content {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .navbar-nav {
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .navbar-nav .nav-item {
+        margin-left: 0;
+    }
+
+    .navbar-profile {
+        margin-left: 0;
+        margin-top: 10px;
+    }
+
+    .profile-image {
+        width: 35px;
+        height: 35px;
+    }
+}
+
+@media (max-width: 575px) {
+    .navbar {
+        padding: 5px;
+    }
+
+    .navbar-brand {
+        font-size: 0.9rem;
+    }
+
+    .navbar-nav {
+        gap: 5px;
+    }
+
+    .navbar-nav .nav-link {
+        font-size: 14px;
+    }
+
+    .profile-image {
+        width: 30px;
+        height: 30px;
+    }
+}

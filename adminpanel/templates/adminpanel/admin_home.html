@@ -1,0 +1,112 @@
+{% extends 'adminpanel/admin_base.html' %}
+{% load static %}
+
+<title>{% block title %}Admin Dashboard | LMS{% endblock %}
+
+{% block content %}
+<div class="container mt-5 pt-4">
+    <!-- Dashboard Overview -->
+    <div class="dashboard-overview d-flex flex-wrap justify-content-between">
+        <!-- Total Students Card -->
+        <div class="overview-card card text-center mb-4" style="width: 18rem;">
+            <div class="card-body">
+                <i class="fas fa-users fa-3x mb-3"></i>
+                <h5 class="card-title">Total Students</h5>
+                <p class="card-text">{{ total_users|default:"0" }}</p>
+            </div>
+        </div>
+
+        <!-- Total Courses Card -->
+        <div class="overview-card card text-center mb-4" style="width: 18rem;">
+            <div class="card-body">
+                <i class="fas fa-book-open fa-3x mb-3"></i>
+                <h5 class="card-title">Total Courses</h5>
+                <p class="card-text">{{ total_courses|default:"0" }}</p>
+            </div>
+        </div>
+
+        <!-- Total Lessons Card -->
+        <div class="overview-card card text-center mb-4" style="width: 18rem;">
+            <div class="card-body">
+                <i class="fas fa-chalkboard fa-3x mb-3"></i>
+                <h5 class="card-title">Total Lessons</h5>
+                <p class="card-text">{{ total_lessons|default:"0" }}</p>
+            </div>
+        </div>
+
+        <!-- Total Revenue Card -->
+        <div class="overview-card card text-center mb-4" style="width: 18rem;">
+            <div class="card-body">
+                <i class="fas fa-file-invoice-dollar fa-3x mb-3"></i>
+                <h5 class="card-title">Total Revenue</h5>
+                <p class="card-text">₹ {{ total_revenue|default:"0.00" }}</p>
+            </div>
+        </div>
+
+        <!-- Growth Rate Card -->
+        <div class="overview-card card text-center mb-4" style="width: 18rem;">
+            <div class="card-body">
+                <i class="fas fa-chart-line fa-3x mb-3"></i>
+                <h5 class="card-title">Growth Rate</h5>
+                <p class="card-text">{{ growth_rate|default:"N/A" }}%</p>
+            </div>
+        </div>
+
+        <!-- Average Ratings Card -->
+        <div class="overview-card card text-center mb-4" style="width: 18rem;">
+            <div class="card-body">
+                <i class="fas fa-star-half-alt fa-3x mb-3"></i>
+                <h5 class="card-title">Average Ratings</h5>
+                <p class="card-text">{{ average_ratings|default:"N/A" }}</p>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="text-center mb-4">Admin Dashboard</h2>
+
+    <!-- Quick Actions Section -->
+    <div class="quick-actions mt-5">
+        <h2>Quick Actions</h2>
+        <div class="d-flex flex-wrap gap-3">
+            <a href="{% url 'create_course' %}" class="action-card btn btn-primary">
+                <i class="fas fa-book-open"></i> Create New Course
+            </a>
+            <a href="{% url 'create_category' %}" class="action-card btn btn-success">
+                <i class="fas fa-plus"></i> Create New Category
+            </a>
+            <a href="{% url 'manage_users' %}" class="action-card btn btn-info">
+                <i class="fas fa-users"></i> Manage Users
+            </a>
+            <a href="{% url 'manage_lessons' %}" class="action-card btn btn-info">
+                <i class="fas fa-book"></i> Manage Lessons
+            </a>
+            <a href="{% url 'manage_videos' %}" class="action-card btn btn-warning">
+                <i class="fas fa-video"></i> Manage Videos
+            </a>
+            <a href="{% url 'manage_mentors' %}" class="action-card btn btn-secondary">
+                <i class="fas fa-chalkboard-teacher"></i> Manage Mentors
+            </a>
+            <a href="{% url 'manage_contact_submissions' %}" class="action-card btn btn-warning">
+                <i class="fas fa-envelope"></i> Manage User Enquiry
+            </a>
+            <a href="{% url 'manage_promotions' %}" class="action-card btn btn-success">
+                <i class="fas fa-bullhorn"></i> Manage Promotions
+            </a>
+        </div>
+    </div>
+
+    <!-- Manage Modules Section -->
+    <div class="quick-actions mt-5">
+        <h2>Manage Modules</h2>
+        {% if courses %}
+            {% for course in courses %}
+                <a href="{% url 'manage_modules' course.id %}" class="action-card btn btn-primary">
+                    <i class="fas fa-th-list"></i> Manage Modules for {{ course.title }}
+                </a>
+            {% endfor %}
+        {% else %}
+            <span class="text-muted">No courses available. Please create a new course and add modules.</span>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

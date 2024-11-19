@@ -1,0 +1,30 @@
+<!-- adminpanel/view_contact.html -->
+{% extends 'adminpanel/admin_base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %}View Contact Submission | Admin Dashboard{% endblock %}
+
+{% block content %}
+<div class="container mt-5 pt-4">
+    <h2>Contact Form Submission Details</h2>
+
+    <div class="card mt-4">
+        <div class="card-header">
+            <h4>Details of the Contact Form Submission</h4>
+        </div>
+        <div class="card-body">
+            <p><strong>Name:</strong> {{ contact_submission.name }}</p>
+            <p><strong>Email:</strong> {{ contact_submission.email }}</p>
+            <p><strong>Mobile Number:</strong> {{ contact_submission.mobile }}</p>  <!-- Display mobile -->
+            <p><strong>Subject:</strong> {{ contact_submission.subject }}</p>
+            <p><strong>Message:</strong> {{ contact_submission.message }}</p>
+            <p><strong>Submitted At:</strong> {{ contact_submission.submitted_at|date:"F j, Y, g:i a" }}</p>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <a href="{% url 'manage_contact_submissions' %}" class="btn btn-outline-secondary">Back to Submissions</a>
+    </div>
+</div>
+{% endblock %}

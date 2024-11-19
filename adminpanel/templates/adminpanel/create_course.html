@@ -1,0 +1,124 @@
+{% extends 'adminpanel/admin_base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block title %}Create Course | Admin Panel{% endblock %}
+
+{% block custom_css %}
+        <link rel="stylesheet" href="{% static 'adminpanel/css/admin_base.css' %}">
+        <link rel="stylesheet" href="{% static 'adminpanel/css/footer.css' %}">
+        <link rel="stylesheet" href="{% static 'adminpanel/css/left_sidebar.css' %}">
+        <link rel="stylesheet" href="{% static 'adminpanel/css/manage_user.css' %}">
+        <link rel="stylesheet" href="{% static 'adminpanel/css/nav_bar.css' %}">
+        <link rel="stylesheet" href="{% static 'adminpanel/css/messages.css' %}">
+        <link rel="stylesheet" href="{% static 'adminpanel/css/create_course.css' %}" >
+    {% endblock %}
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-sm p-4 mb-5">
+        <h2 class="text-center text-primary mb-4">Create New Course</h2>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+
+            <!-- Title Field -->
+            <div class="mb-3">
+                {{ form.title.label_tag }}
+                {{ form.title|add_class:"form-control" }}
+            </div>
+
+            <!-- Description Field -->
+            <div class="mb-3">
+                {{ form.description.label_tag }}
+                {{ form.description|add_class:"form-control" }}
+            </div>
+
+            <!-- Category Field -->
+            <div class="mb-3">
+                {{ form.category.label_tag }}
+                {{ form.category|add_class:"form-control" }}
+            </div>
+
+            <!-- Mentor Field -->
+            <div class="mb-3">
+                {{ form.mentor.label_tag }}
+                {{ form.mentor|add_class:"form-control" }}
+            </div>
+
+            <!-- Status Field -->
+            <div class="mb-3">
+                {{ form.status.label_tag }}
+                {{ form.status|add_class:"form-control" }}
+            </div>
+
+            <!-- Thumbnail Field -->
+            <div class="mb-3">
+                <label for="{{ form.thumbnail.id_for_label }}" class="form-label">Thumbnail:</label>
+                {{ form.thumbnail|add_class:"form-control-file" }}
+                {% if form.thumbnail.errors %}
+                    <div class="text-danger">
+                        {% for error in form.thumbnail.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Curriculum Field -->
+            <div class="mb-3">
+                <label for="{{ form.curriculum.id_for_label }}" class="form-label">Curriculum:</label>
+                {{ form.curriculum|add_class:"form-control-file" }}
+                {% if form.curriculum.errors %}
+                    <div class="text-danger">
+                        {% for error in form.curriculum.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Price Field -->
+            <div class="mb-3">
+                {{ form.price.label_tag }}
+                {{ form.price|add_class:"form-control" }}
+                {% if form.price.errors %}
+                    <div class="text-danger">
+                        {% for error in form.price.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Duration Fields: Type and Value -->
+            <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                    {{ form.duration_value.label_tag }}
+                    {{ form.duration_value|add_class:"form-control" }}
+                    {% if form.duration_value.errors %}
+                        <div class="text-danger">
+                            {% for error in form.duration_value.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="col-md-6">
+                    {{ form.duration_type.label_tag }}
+                    {{ form.duration_type|add_class:"form-control" }}
+                    {% if form.duration_type.errors %}
+                        <div class="text-danger">
+                            {% for error in form.duration_type.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-primary w-100">Create Course</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

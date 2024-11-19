@@ -1,0 +1,89 @@
+/* Main Content */
+.main-content {
+    margin-top: 25px;
+    margin-left: 78px; /* Collapsed sidebar width */
+    width: calc(100% - 78px);
+    padding: 20px;
+    transition: margin-left 0.3s ease, width 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--card-background);
+}
+
+/* Wrapper adjustments for sidebar */
+.wrapper.sidebar-open .main-content {
+    margin-left: 250px;
+    width: calc(100% - 250px);
+}
+
+/* Modern design for Manage Lessons */
+
+/* Card Styling */
+.card {
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: var(--card-background);
+}
+
+.card-header {
+    border-radius: 10px 10px 0 0;
+}
+
+.lesson-card {
+    border: 1px solid var(--card-background);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.lesson-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Buttons */
+.btn {
+    border-radius: 6px;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+.text-muted {
+    color: var(--navbar-text-color) !important;
+}
+
+.fw-bold {
+    font-weight: 700 !important;
+    color: var(--navbar-text-color);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 576px) {
+    /* Center-align text and buttons for smaller screens */
+    .text-md-start {
+        text-align: center;
+    }
+
+    .text-md-end {
+        text-align: center;
+    }
+
+    /* Stack buttons vertically with proper spacing */
+    .lesson-card .btn {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+
+    .lesson-card .d-flex {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .lesson-card .col-md-6 {
+        text-align: center;
+    }
+
+    .lesson-card h6 {
+        font-size: 1.1rem;
+    }
+}

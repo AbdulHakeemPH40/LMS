@@ -1,0 +1,22 @@
+{% extends 'adminpanel/admin_base.html' %}
+
+{% block title %}Mentor Details{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Mentor Details</h2>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">{{ mentor.user.get_full_name }}</h5>
+            <p><strong>Skills:</strong> {{ mentor.skills }}</p>
+            <p><strong>Experience:</strong> {{ mentor.experience }}</p>
+            <p><strong>Awards & Recognitions:</strong> {{ mentor.awards_and_recognitions }}</p>
+            {% if mentor.profile_image %}
+                <img src="{{ mentor.profile_image.url }}" alt="Profile Image" style="width:150px; height:150px; border-radius:50%;">
+            {% else %}
+                <p>No Profile Image</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

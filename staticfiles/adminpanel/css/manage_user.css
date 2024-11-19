@@ -1,0 +1,79 @@
+.main-content {
+    margin-left: 78px; /* Adjust based on sidebar width */
+    padding-top: 60px; /* Adjust based on navbar height */
+    transition: margin-left 0.3s ease;
+    min-height: calc(100vh - 60px - 95px);
+    padding-bottom: 95px; /* To prevent overlap with footer */
+}
+
+.left-sidebar.open ~ .main-content {
+    margin-left: 250px;
+}
+/* Table Responsiveness */
+.table-responsive {
+    overflow-x: auto; /* Enables horizontal scrolling for overflowing tables */
+    margin-top: 1rem; /* Adds space above the table */
+}
+
+/* Table Cells */
+.table th, .table td {
+    padding: 12px; /* Adds spacing within cells */
+    text-align: left; /* Aligns text to the left */
+    border-top: 1px solid #dee2e6; /* Adds a border between rows */
+}
+
+/* Table Header */
+.table th {
+    background-color: #f8f9fa; /* Light gray background for headers */
+    font-weight: 600; /* Makes header text bold */
+}
+
+/* Action Buttons */
+.action-buttons {
+    display: flex; /* Aligns buttons in a row */
+    flex-wrap: wrap; /* Wraps buttons if they don't fit in one line */
+    gap: 8px; /* Adds space between buttons */
+}
+
+/* Button Styles */
+.btn-warning {
+    background-color: #f0ad4e; /* Warning color */
+    color: #fff; /* White text */
+}
+
+.btn-warning:hover {
+    background-color: #ec971f; /* Darker shade on hover */
+}
+
+.btn-secondary {
+    background-color: #6c757d; /* Secondary gray color */
+    color: #fff;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268; /* Darker gray on hover */
+}
+
+.btn-success {
+    background-color: #5cb85c; /* Success green color */
+    color: #fff;
+}
+
+.btn-success:hover {
+    background-color: #4cae4c; /* Darker green on hover */
+}
+
+.btn-primary {
+    background-color: #0275d8; /* Primary blue color */
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background-color: #025aa5; /* Darker blue on hover */
+}
+
+/* Small Button Size */
+.btn-sm {
+    padding: 5px 10px; /* Smaller padding for compact size */
+    font-size: 0.875rem; /* Slightly reduced font size */
+}

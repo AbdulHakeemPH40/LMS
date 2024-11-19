@@ -1,0 +1,471 @@
+/* static/css/base.css */
+
+/* Light Mode Variables */
+:root {
+    --navbar-text-color: #212529; /* Dark text for light navbar */
+    --navbar-background: rgba(255, 255, 255, 0.9); /* Light background for navbar */
+    --primary-color: #333333; /* Primary color for links and buttons */
+    --secondary-color: #6c757d; /* Secondary text color */
+    --background-color: #ffffff; /* Light background color */
+    --text-color: #212529; /* Default text color for light mode */
+    --card-background: #f8f9fa; /* Light card background */
+    --triple-color: rgb(255, 255, 255);
+    --shadow-color: rgba(0, 0, 0, 0.1); /* Light shadow */
+    --dark-color: black;
+}
+
+/* Dark Mode Variables */
+[data-theme="dark"] {
+    --navbar-text-color: #e9ecef; /* Light text for dark navbar */
+    --navbar-background: #121212; /* Dark background for navbar */
+    --primary-color: #0d6efd; /* Slightly brighter primary color for dark mode */
+    --secondary-color: #adb5bd; /* Lighter secondary text color */
+    --background-color: #121212; /* Dark background color */
+    --text-color: #ffffff; /* Light text color for dark mode */
+    --card-background: #1e1e1e; /* Dark card background */
+    --shadow-color: rgba(0, 0, 0, 0.5); /* Dark shadow */
+}
+
+/* General Styles */
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+a {
+    text-decoration: none;
+    color: var(--text-color);
+}
+
+/* Navbar Styles */
+.navbar {
+    background-color: var(--navbar-background);
+    box-shadow: 0 4px 12px var(--shadow-color);
+    backdrop-filter: blur(10px);
+}
+
+.navbar-brand {
+    font-weight: bold;
+    color: var(--navbar-text-color);
+}
+
+.navbar-brand:hover {
+    color: var(--navbar-hover-color);
+    text-decoration: none;
+    transition: color 0.3s ease-in-out;
+}
+
+.navbar-nav .nav-link {
+    font-size: 16px;
+    color: var(--navbar-text-color);
+    transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link.active {
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+.navbar-nav .nav-link:hover {
+    color: var(--primary-color);
+}
+
+.navbar-nav .btn {
+    color: var(--navbar-text-color);
+    border-color: var(--navbar-text-color);
+}
+
+.navbar-nav .btn:hover {
+    background-color: var(--primary-color);
+    color: #fff;
+    border-color: var(--primary-color);
+}
+
+/* Hero Section */
+.hero-section {
+    min-height: calc(100vh - 60px); /* Adjusted for navbar height */
+    background-image: url('https://images.pexels.com/photos/4065876/pexels-photo-4065876.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&dpr=1');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.hero-content {
+    max-width: 700px;
+    padding: 40px;
+    border-radius: 15px;
+    background-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 30px var(--shadow-color);
+    backdrop-filter: blur(50px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+[data-theme="dark"] .hero-content {
+    background-color: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(0, 0, 0, 0.8);
+}
+
+.hero-content h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    color: var(--text-color);
+}
+
+.hero-content p {
+    font-size: 1.5rem;
+    margin: 20px 0;
+    color: var(--text-color);
+}
+
+.hero-content .btn {
+    padding: 10px 30px;
+    font-size: 1.2rem;
+    background-color: var(--dark-color);
+    border: none;
+}
+
+.hero-content .btn:hover {
+    background-color: var(--primary-color);
+    color: #fff;
+}
+
+[data-theme="dark"] .hero-content .btn {
+    background-color: var(--primary-color) !important;
+    color: #fff;
+}
+
+/* Courses Section */
+.courses-section {
+    padding: 80px 0;
+    background-color: var(--background-color);
+}
+
+.courses-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    color: var(--text-color);
+}
+
+.courses-section .lead {
+    color: var(--secondary-color);
+}
+
+.course-card {
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0 10px 20px var(--shadow-color);
+    overflow: hidden;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    background-color: var(--card-background);
+}
+
+.course-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px var(--shadow-color);
+}
+
+.course-card .card-img-top {
+    border-radius: 15px;
+    object-fit: cover;
+    height: 200px;
+    width: 100%;
+}
+
+.course-card .card-body {
+    text-align: center;
+    padding: 20px;
+}
+
+.course-card .card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.course-card .card-text {
+    font-size: 1rem;
+    color: var(--secondary-color);
+}
+
+/* Instructors Section */
+.instructors-section {
+    background-color: var(--card-background);
+    padding: 80px 0;
+}
+
+.instructors-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    color: var(--text-color);
+}
+
+.instructors-section .lead {
+    color: var(--secondary-color);
+}
+
+.instructors-section img {
+    width: 125px;
+    height: 125px;
+    object-fit: cover;
+    margin-bottom: 15px;
+    border: 2px solid var(--primary-color);
+    border-radius: 50%;
+}
+
+.instructors-section h5 {
+    font-size: 1.2rem;
+    color: var(--text-color);
+}
+
+.instructors-section p {
+    color: var(--secondary-color);
+}
+
+/* Reviews Section */
+.reviews-section {
+    padding: 80px 0;
+    background-color: var(--background-color);
+}
+
+.reviews-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    color: var(--text-color);
+}
+
+.reviews-section .lead {
+    color: var(--secondary-color);
+}
+
+.review-card {
+    background-color: var(--card-background);
+    border-radius: 10px;
+    box-shadow: 0 10px 30px var(--shadow-color);
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+.review-card p {
+    font-size: 1rem;
+    color: var(--text-color);
+}
+
+.student-name {
+    font-size: 1rem;
+    color: var(--secondary-color);
+    font-style: italic;
+}
+
+.rating {
+    font-size: 1.5rem;
+    color: gold;
+}
+
+/* Adding a subtle animation for the glassy effect */
+@keyframes glassy-fade-in {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.hero-content {
+    animation: glassy-fade-in 1.5s ease;
+}
+
+/* Responsive Styles */
+
+/* Adjustments for tablets and small desktops */
+@media (max-width: 991px) {
+    .hero-content {
+        padding: 30px;
+    }
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+    .hero-content p {
+        font-size: 1.2rem;
+    }
+    .navbar-brand {
+        font-size: 1.8rem;
+    }
+    .navbar-nav .nav-link {
+        font-size: 14px;
+    }
+    .courses-section h2 {
+        font-size: 2rem;
+    }
+    .course-card .card-img-top {
+        height: 180px;
+    }
+    .instructors-section img {
+        width: 100px;
+        height: 100px;
+    }
+    .footer {
+        padding: 15px 0;
+    }
+    .btn {
+        margin: 5px;
+    }
+}
+
+/* Adjustments for mobile devices */
+@media (max-width: 767px) {
+    .hero-content {
+        padding: 20px;
+    }
+    .hero-content h1 {
+        font-size: 2rem;
+    }
+    .hero-content p {
+        font-size: 1rem;
+    }
+    .hero-content .btn {
+        font-size: 1rem;
+        padding: 10px 25px;
+        margin-top: 20px;
+    }
+    .navbar-brand {
+        font-size: 1.6rem;
+    }
+    .navbar-nav .nav-link {
+        font-size: 13px;
+    }
+    .courses-section h2 {
+        font-size: 1.8rem;
+    }
+    .course-card .card-img-top {
+        height: 150px;
+    }
+    .instructors-section h2 {
+        font-size: 2rem;
+    }
+    .instructors-section img {
+        width: 80px;
+        height: 80px;
+    }
+    .instructors-section h5 {
+        font-size: 1rem;
+    }
+    .reviews-section h2 {
+        font-size: 2rem;
+    }
+    .review-card {
+        padding: 15px;
+    }
+    .footer {
+        padding: 10px 0;
+    }
+}
+
+/* Adjustments for extra small devices */
+@media (max-width: 576px) {
+    .hero-content {
+        padding: 15px;
+    }
+    .hero-content h1 {
+        font-size: 1.8rem;
+    }
+    .hero-content p {
+        font-size: 0.9rem;
+    }
+    .hero-content .btn {
+        font-size: 0.9rem;
+        padding: 8px 20px;
+        margin-top: 25px;
+    }
+    .navbar-brand {
+        font-size: 1.4rem;
+    }
+    .navbar-nav .nav-link {
+        font-size: 12px;
+    }
+    .courses-section h2 {
+        font-size: 1.6rem;
+    }
+    .course-card .card-img-top {
+        height: 120px;
+    }
+    .instructors-section h2 {
+        font-size: 1.8rem;
+    }
+    .instructors-section img {
+        width: 60px;
+        height: 60px;
+    }
+    .instructors-section h5 {
+        font-size: 0.9rem;
+    }
+    .reviews-section h2 {
+        font-size: 1.8rem;
+    }
+    .review-card {
+        padding: 10px;
+    }
+}
+
+/* Footer Styles */
+.footer {
+    background-color: var(--navbar-background);
+    color: var(--text-color);
+    padding: 15px 0;
+    width: 100%;
+    text-align: center;
+    flex-shrink: 0;
+    box-shadow: 0 -4px 12px var(--shadow-color);
+}
+
+.footer p {
+    margin-bottom: 0;
+}
+
+.footer .social-icons {
+    margin-top: 10px;
+}
+
+.footer .social-icons a {
+    color: var(--triple-color);
+    margin-right: 15px;
+    font-size: 18px;
+}
+
+.footer .social-icons a:hover {
+    color: var(--primary-color);
+}
+
+/* Additional Adjustments */
+.navbar-collapse {
+    justify-content: flex-end;
+}
+
+.navbar-toggler {
+    border-color: var(--navbar-text-color);
+}
+
+/* Ensure the navbar-toggler-icon displays correctly */
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=UTF8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='%23212529' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+
+/* Ensure the hero section doesn't overlap with the navbar */
+body {
+    padding-top: 60px; /* Adjust if your navbar height is different */
+}
+
+.hero-section {
+    margin-top: -60px; /* Pull back up to negate body padding */
+}

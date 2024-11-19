@@ -1,0 +1,129 @@
+{% extends 'sitevisitor/base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+<title>{% block title %}Login - LMS Platform{% endblock %}</title>
+
+{% block custom_css %}
+    <link rel="stylesheet" href="{% static 'sitevisitor/css/sign_in.css' %}">
+    <style>
+        .login-container {
+            background-color: var(--card-background);
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .signin-section h2, .signin-section p {
+            color: #ffffff;
+        }
+
+        .form-group input[type="checkbox"] {
+            transform: scale(1.2);
+            margin-right: 10px;
+        }
+
+        .form-control {
+            padding: 15px;
+            font-size: 1rem;
+            border-radius: 5px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border: none;
+            transition: background-color 0.3s;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .alert-section {
+            margin-top: 20px;
+        }
+
+        .additional-options {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-color);
+        }
+
+        .additional-options a {
+            color: var(--primary-color);
+            transition: color 0.3s;
+            margin: 0 15px;
+            text-decoration: none;
+        }
+
+        .additional-options a:hover {
+            color: var(--secondary-color);
+            text-decoration: underline;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+<section class="signin-section py-5">
+    <div class="container">
+        <h2 class="text-center mb-4">Sign in to your account</h2>
+        <p class="text-center mb-5">Welcome back! Please enter your details.</p>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-5 col-md-8">
+                <div class="login-container p-4 rounded">
+                    
+                    {% if messages %}
+                        <div class="messages mt-2">
+                            {% for message in messages %}
+                                <div class="alert alert-{{ message.tags }} alert-danger fade show custom-alert" role="alert">
+                                    {{ message }}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    <form method="POST" class="signin-form">
+                        {% csrf_token %}
+
+                        <div class="mb-3">
+                            {{ form.username|add_class:"form-control" }}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.password|add_class:"form-control" }}
+                        </div>
+
+                        <div class="form-group text-center custom-checkbox">
+                            <input type="checkbox" id="show-password">
+                            <label for="show-password">Show Password</label>
+                            <br>
+                            <br>
+                        </div>
+
+                        <div class="form-group text-center">
+                            <button type="submit" class="btn btn-primary w-100">Sign In</button>
+                        </div>
+
+                        <div class="alert-section" id="alert-section"></div>
+                        
+                        <!-- Additional Links with Spacing -->
+                        <div class="additional-options text-center mt-3">
+                            <a href="{% url 'sign_up' %}">Create a New Account</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    document.getElementById('show-password').addEventListener('change', function() {
+        var passwordField = document.querySelector('[name="password"]');
+        passwordField.type = this.checked ? 'text' : 'password';
+    });
+</script>
+{% endblock %}

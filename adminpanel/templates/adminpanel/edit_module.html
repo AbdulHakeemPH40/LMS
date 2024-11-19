@@ -1,0 +1,38 @@
+<!-- adminpanel/templates/adminpanel/edit_module.html -->
+{% extends 'adminpanel/admin_base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block title %}Edit Module | Admin Panel{% endblock %}
+
+{% block content %}
+<div class="container mt-5 pt-4">
+    <div class="card shadow-sm p-4 mb-5 bg-white rounded">
+        <h2 class="text-center mb-4">Edit Module</h2>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            <div class="mb-3">
+                {{ form.title.label_tag }}
+                {{ form.title|add_class:"form-control" }}
+                {{ form.title.errors }}
+            </div>
+            <div class="mb-3">
+                {{ form.description.label_tag }}
+                {{ form.description|add_class:"form-control" }}
+                {{ form.description.errors }}
+            </div>
+            <div class="mb-3">
+                {{ form.order.label_tag }}
+                {{ form.order|add_class:"form-control" }}
+                {{ form.order.errors }}
+            </div>
+            <div class="form-check mb-3">
+                {{ form.DELETE }}
+                {{ form.DELETE.label_tag }}
+            </div>
+            <button type="submit" class="btn btn-success w-100">Update Module</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

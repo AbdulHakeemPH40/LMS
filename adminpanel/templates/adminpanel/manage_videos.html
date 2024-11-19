@@ -1,0 +1,115 @@
+<!-- adminpanel/templates/adminpanel/manage_videos_by_course.html -->
+{% extends 'adminpanel/admin_base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %}Manage Videos by Course | Admin Dashboard{% endblock %}
+
+{% block custom_css %}
+<link rel="stylesheet" href="{% static 'adminpanel/css/manage_videos.css' %}">
+<link rel="stylesheet" href="{% static 'adminpanel/css/footer.css' %}">
+<link rel="stylesheet" href="{% static 'adminpanel/css/left_sidebar.css' %}">
+<link rel="stylesheet" href="{% static 'adminpanel/css/nav_bar.css' %}">
+<link rel="stylesheet" href="{% static 'adminpanel/css/messages.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="main-content">
+    <div class="container mt-5 pt-4">
+        <div class="d-flex justify-content-between align-items-center mb-4 header-flex flex-wrap">
+            <h2 class="mb-0">Manage Videos by Course</h2>
+            <!-- You can add a button here if needed -->
+        </div>
+
+        {% if courses %}
+            {% for course in courses %}
+                <div class="course-section card mb-5">
+                    <div class="card-header bg-primary text-white">
+                        <h3 class="card-title mb-0">{{ course.title }}</h3>
+                    </div>
+                    <div class="card-body">
+                        {% if course.modules.all %}
+                            {% for module in course.modules.all %}
+                                <div class="module-section card mb-4">
+                                    <div class="card-header bg-secondary text-white">
+                                        <h5 class="card-title mb-0">{{ module.title }}</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        {% if module.lessons.all %}
+                                            {% for lesson in module.lessons.all %}
+                                                <div class="lesson-section card mb-3">
+                                                    <div class="card-header bg-info text-white d-flex justify-content-between align-items-center">
+                                                        <h6 class="card-title mb-0">{{ lesson.title }}</h6>
+                                                        <a href="{% url 'add_video' lesson.id %}" class="btn btn-sm btn-success">
+                                                            <i class="fas fa-plus me-1"></i> Add Video
+                                                        </a>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        {% if lesson.lesson_videos.all %}
+                                                            <div class="table-responsive">
+                                                                <table class="table table-striped table-hover align-middle">
+                                                                    <thead class="table-light">
+                                                                        <tr>
+                                                                            <th scope="col">#</th>
+                                                                            <th scope="col">Video Title</th>
+                                                                            <th scope="col">Video Type</th>
+                                                                            <th scope="col">Order</th>
+                                                                            <th scope="col" class="text-center">Actions</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        {% for video in lesson.lesson_videos.all %}
+                                                                            <tr>
+                                                                                <th scope="row">{{ forloop.counter }}</th>
+                                                                                <td>{{ video.title }}</td>
+                                                                                <td>{{ video.get_video_type_display }}</td>
+                                                                                <td>{{ video.order }}</td>
+                                                                                <td class="text-center">
+                                                                                    <div class="action-buttons">
+                                                                                        <a href="{% url 'edit_video' video.id %}" class="btn btn-sm btn-outline-warning me-2 mb-2 mb-md-0" data-bs-toggle="tooltip" title="Edit Video">
+                                                                                            <i class="fas fa-edit"></i> <span class="d-none d-md-inline">Edit</span>
+                                                                                        </a>
+                                                                                        <a href="{% url 'delete_video' video.id %}" class="btn btn-sm btn-outline-danger mb-2 mb-md-0" data-bs-toggle="tooltip" title="Delete Video">
+                                                                                            <i class="fas fa-trash-alt"></i> <span class="d-none d-md-inline">Delete</span>
+                                                                                        </a>
+                                                                                    </div>
+                                                                                </td>
+                                                                            </tr>
+                                                                        {% endfor %}
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        {% else %}
+                                                            <p class="text-muted">No videos available for this lesson.</p>
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                        {% else %}
+                                            <p class="text-muted">No lessons available in this module.</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <p class="text-muted">No modules available in this course.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="text-muted">No courses available.</p>
+        {% endif %}
+    </div>
+</div>
+
+{% block extra_scripts %}
+<script>
+    // Initialize tooltips
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+</script>
+{% endblock %}
+{% endblock %}

@@ -1,0 +1,88 @@
+{% extends 'sitevisitor/base.html' %}
+{% load static %}
+
+{% block title %}Meet Our Mentors{% endblock %}
+
+{% block custom_css %}
+<link rel="stylesheet" href="{% static 'sitevisitor/css/site_mentor.css' %}">
+{% endblock %}
+
+{% block content %}    
+    <!-- Mentor Hero Section -->
+    <section class="mentor-hero-section text-center">
+        <div class="mentor-hero-content">
+            <h1>Meet Our Mentors</h1>
+            <p>Learn from industry experts with years of experience in their fields.</p>
+        </div>
+    </section>
+
+    <section class="mentors-overview py-5">
+        <div class="container text-center">
+            <h2>Our Experienced Mentors</h2>
+            <p class="lead">Explore the mentors who will guide you on your learning journey.</p>
+            <div class="row">
+                {% if mentors %}
+                    {% for mentor in mentors %}
+                        <div class="col-md-4 mb-4">
+                            <div class="card mentor-card">
+                                {% if mentor.profile_image %}
+                                    <img src="{{ mentor.profile_image.url }}" alt="{{ mentor.user.username }}" class="card-img-top">
+                                {% else %}
+                                    <img src="{% static 'images/default_mentor.jpg' %}" alt="Default Mentor Image" class="card-img-top">
+                                {% endif %}
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ mentor.user.first_name }} {{ mentor.user.last_name }}</h5>
+                                    <p class="card-text">{{ mentor.bio|default:"Mentor with extensive experience in their field." }}</p>
+                                    <a href="#mentor{{ mentor.id }}-details" class="btn btn-primary">Learn More</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p class="text-muted">No mentors are available at the moment. Please check back later!</p>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Mentor Details Section -->
+   <!-- Mentor Details Section -->
+    {% for mentor in mentors %}
+        <section id="mentor{{ mentor.id }}-details" class="mentor-details py-5">
+            <div class="container">
+                <h2>{{ mentor.user.first_name }} {{ mentor.user.last_name }}</h2>
+                <p>{{ mentor.bio|default:"This mentor has a wealth of knowledge and is dedicated to student success." }}</p>
+                
+                <h4>Skills:</h4>
+                <ul>
+                    {% for skill in mentor.split_skills %}
+                        <li>{{ skill }}</li>
+                    {% empty %}
+                        <li>Skills data not available.</li>
+                    {% endfor %}
+                </ul>
+
+                <h4>Experience:</h4>
+                <p>{{ mentor.experience|default:"Experience details not available." }}</p>
+                
+                <h4>Awards & Recognitions:</h4>
+                <ul>
+                    {% for award in mentor.split_awards %}
+                        <li>{{ award }}</li>
+                    {% empty %}
+                        <li>Awards and recognitions data not available.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </section>
+    {% endfor %}
+
+
+{% endblock %}
+
+{% block custom_js %}
+<script>
+    // Specific JS for mentor page if needed
+    console.log("Mentor page loaded!");
+</script>
+{% endblock %}

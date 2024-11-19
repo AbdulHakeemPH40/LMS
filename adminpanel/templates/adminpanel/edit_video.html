@@ -1,0 +1,67 @@
+{% extends 'adminpanel/admin_base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %}Edit Video | Admin Dashboard{% endblock %}
+
+{% block content %}
+<div class="container mt-5 pt-4">
+    <div class="card shadow-sm border-secondary">
+        <div class="card-header bg-primary text-white">
+            <h4>Edit Video</h4>
+        </div>
+        <div class="card-body">
+            <form method="post" enctype="multipart/form-data" class="form-group">
+                {% csrf_token %}
+
+                <div class="mb-4">
+                    <label for="id_title" class="form-label">Title</label>
+                    {{ form.title|add_class:"form-control border-secondary" }}
+                </div>
+
+                <div class="mb-4">
+                    <label for="id_video_type" class="form-label">Video Type</label>
+                    {{ form.video_type|add_class:"form-select border-secondary" }}
+                </div>
+
+                <div class="mb-4" id="video_file_field" {% if not form.video_file.value %}style="display:none"{% endif %}>
+                    <label for="id_video_file" class="form-label">Upload Video File</label>
+                    {{ form.video_file|add_class:"form-control-file border-secondary" }}
+                </div>
+
+                <div class="mb-4" id="video_url_field" {% if not form.video_url.value %}style="display:none"{% endif %}>
+                    <label for="id_video_url" class="form-label">YouTube URL</label>
+                    {{ form.video_url|add_class:"form-control border-secondary" }}
+                </div>
+
+                <div class="mb-4">
+                    <label for="id_order" class="form-label">Order</label>
+                    {{ form.order|add_class:"form-control border-secondary" }}
+                </div>
+
+                <!-- Lock Video field with status display -->
+                <div class="mb-4">
+                    <label for="id_is_locked" class="form-label">Lock Video</label>
+                    {{ form.is_locked|add_class:"form-check-input" }}
+                    <small class="form-text text-muted">Check this box to lock the video.</small>
+                </div>
+
+                <!-- Show if the video is locked or open -->
+                <div class="mb-4">
+                    <label class="form-label">Current Status:</label>
+                    {% if video.is_locked %}
+                        <span class="text-danger">Locked</span>
+                    {% else %}
+                        <span class="text-success">Open</span>
+                    {% endif %}
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-success px-4">Save Changes</button>
+                    <a href="{% url 'manage_videos' %}" class="btn btn-outline-secondary px-4">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,187 @@
+/* Light Mode (default) */
+:root {
+    --primary-color: #2575fc;
+    --secondary-color: #6a11cb;
+    --navbar-text-color: #333;
+    --navbar-background: rgba(255, 255, 255, 0.95);
+    --background-color: #ffffff;
+    --text-color: #333333;
+    --card-background: #ffffff;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --btn-color:#333333;
+}
+
+/* Dark Mode */
+[data-theme="dark"] {
+    --primary-color: #0d6efd;
+    --secondary-color: #1e3a8a;
+    --navbar-text-color: #e9ecef;
+    --navbar-background: #121212;
+    --background-color: #121212;
+    --text-color: #e9ecef;
+    --card-background: #1e1e1e;
+    --shadow-color: rgba(0, 0, 0, 0.5);
+    --btn-color:#0d6efd;
+}
+
+/* Navbar Styles */
+.navbar {
+    background-color: var(--navbar-background); /* Navbar adapts to theme */
+    box-shadow: 0 4px 12px var(--shadow-color); /* Soft shadow */
+    backdrop-filter: blur(10px); /* Subtle blur effect */
+}
+
+.navbar-brand {
+    font-weight: bold;
+    color: var(--navbar-text-color); /* Brand adapts to theme */
+    
+}
+.navbar-brand:hover {
+    color: var(--navbar-hover-color); /* Change color on hover */
+    text-decoration: none; /* Remove underline on hover */
+    transition: color 0.3s ease-in-out; /* Ensure smooth transition */
+}
+
+.navbar-nav .nav-link {
+    font-size: 16px;
+    color: var(--navbar-text-color); /* Links adapt to theme */
+    transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link.active {
+    font-weight: bold;
+    color: var(--primary-color); /* Active link color */
+}
+
+.navbar-nav .nav-link:hover {
+    color: var(--primary-color); /* Hover color remains primary */
+}
+
+.navbar-nav .btn {
+    color: var(--navbar-text-color); /* Button text adapts to theme */
+    border-color: var(--navbar-text-color); /* Button border adapts */
+}
+
+.navbar-nav .btn:hover {
+    background-color: var(--primary-color); /* Button background on hover */
+    color: #fff;
+    border-color: var(--primary-color);
+}
+
+
+/* Hero Section */
+.course-section{
+    height: 60vh;
+    background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+}
+
+.course-section h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+.course-section p {
+    font-size: 1.25rem;
+    margin-top: 10px;
+}
+
+/* Courses Overview */
+.courses-overview {
+    padding: 60px 0;
+    background-color: var(--background-color);
+}
+
+.courses-overview h2 {
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+    color: var(--text-color);
+}
+
+/* Course Card */
+.course-card {
+    border: none;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    border-radius: 15px;
+    overflow: hidden;
+    background-color: var(--card-background);
+    box-shadow: 0 10px 20px var(--shadow-color);
+}
+
+.course-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px var(--shadow-color);
+}
+
+.course-card img {
+    object-fit: cover;
+    height: 220px;
+    width: 100%;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.course-card h5 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.course-card .course-details {
+    padding-left: 0;
+    list-style: none;
+}
+
+.course-card .course-details li {
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+    color: var(--text-color);
+}
+
+.course-card .btn {
+    background-color: var(--btn-color);
+    color: white;
+}
+
+.course-card .btn:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.course-card .card-text {
+    font-size: 1rem;
+    color: var(--text-color);
+}
+
+/* Footer */
+.footer {
+    padding: 15px 0;
+    text-align: center;
+    box-shadow: 0 -2px 8px var(--shadow-color); /* Softer shadow */
+    font-size: 14px;
+}
+
+.footer .social-icons {
+    margin-top: 10px;
+}
+
+.footer .social-icons a {
+    color:white;
+    margin: 0 10px;
+    font-size: 20px;
+    transition: color 0.3s;
+}
+
+
+.footer .social-icons a:hover {
+    color: var(--primary-color); /* Hover effect for social icons */
+}

@@ -1,0 +1,18 @@
+{% extends 'adminpanel/admin_base.html' %}
+{% load static %}
+
+{% block title %}Create Promotion | Admin Dashboard{% endblock %}
+
+{% block content %}
+<div class="container mt-5 pt-4">
+    <h2 class="text-center mb-4">Create New Promotion</h2>
+
+    <form method="POST" class="form-group">
+        {% csrf_token %}
+        {{ form.as_p }}  <!-- Display the form fields -->
+
+        <button type="submit" class="btn btn-success">Create Promotion</button>
+        <a href="{% url 'manage_promotions' %}" class="btn btn-outline-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

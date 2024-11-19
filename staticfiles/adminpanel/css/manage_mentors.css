@@ -1,0 +1,253 @@
+/* adminpanel/css/manage_mentors.css */
+
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* CSS Variables for Theming */
+:root {
+    --primary-color: #2575fc;
+    --secondary-color: #6a11cb;
+    --success-color: #28a745;
+    --warning-color: #ffc107;
+    --danger-color: #dc3545;
+    --info-color: #17a2b8;
+    --background-color: #ffffff;
+    --text-color: #333333;
+    --card-background: #ffffff;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --table-background: #ffffff;
+    --table-text-color: #333333;
+    --table-border-color: #dee2e6;
+    --table-hover-background: rgba(0, 0, 0, 0.05);
+}
+
+/* Dark Mode */
+[data-theme="dark"] {
+    --primary-color: #0d6efd;
+    --secondary-color: #1e3a8a;
+    --success-color: #28a745;
+    --warning-color: #ffc107;
+    --danger-color: #dc3545;
+    --info-color: #17a2b8;
+    --background-color: #121212;
+    --text-color: #f1f1f1;
+    --card-background: #1e1e1e;
+    --shadow-color: rgba(0, 0, 0, 0.5);
+    --table-background: #1e1e1e;
+    --table-text-color: #f1f1f1;
+    --table-border-color: #343a40;
+    --table-hover-background: rgba(255, 255, 255, 0.1);
+}
+
+/* General Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+.main-content {
+    margin-left: 78px; /* Adjust based on sidebar width */
+    padding-top: 60px; /* Adjust based on navbar height */
+    transition: margin-left 0.3s ease;
+    min-height: calc(100vh - 60px - 95px);
+    padding-bottom: 95px; /* To prevent overlap with footer */
+}
+
+.left-sidebar.open ~ .main-content {
+    margin-left: 250px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.header-flex {
+    margin-top: 20px;
+}
+
+.header-flex h2 {
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.header-flex .btn {
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-primary:hover {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+}
+
+.table-responsive {
+    margin-top: 20px;
+}
+
+.table {
+    margin-bottom: 0;
+    color: var(--table-text-color);
+    background-color: var(--table-background);
+    border-color: var(--table-border-color);
+}
+
+.table thead th {
+    background-color: var(--card-background);
+    color: var(--text-color);
+    border-bottom: 2px solid var(--table-border-color);
+}
+
+.table-hover tbody tr:hover {
+    background-color: var(--table-hover-background);
+}
+
+.table td, .table th {
+    vertical-align: middle;
+    border-color: var(--table-border-color);
+}
+
+.profile-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--primary-color);
+}
+
+.action-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.action-buttons .btn {
+    margin: 2px;
+}
+
+.btn {
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.btn i {
+    margin-right: 5px;
+}
+
+.btn-outline-info {
+    color: var(--info-color);
+    border-color: var(--info-color);
+}
+
+.btn-outline-info:hover {
+    background-color: var(--info-color);
+    color: #fff;
+}
+
+.btn-outline-warning {
+    color: var(--warning-color);
+    border-color: var(--warning-color);
+}
+
+.btn-outline-warning:hover {
+    background-color: var(--warning-color);
+    color: #000;
+}
+
+.btn-outline-danger {
+    color: var(--danger-color);
+    border-color: var(--danger-color);
+}
+
+.btn-outline-danger:hover {
+    background-color: var(--danger-color);
+    color: #fff;
+}
+
+/* Tooltip Styling */
+.tooltip-inner {
+    background-color: var(--shadow-color);
+    color: var(--text-color);
+}
+
+.tooltip.bs-tooltip-top .arrow::before {
+    border-top-color: var(--shadow-color);
+}
+
+.tooltip.bs-tooltip-bottom .arrow::before {
+    border-bottom-color: var(--shadow-color);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 767.98px) {
+    .header-flex {
+        flex-direction: column;
+        align-items: flex-start !important;
+    }
+
+    .header-flex h2 {
+        margin-bottom: 10px;
+    }
+
+    .header-flex .btn {
+        width: 100%;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .action-buttons .btn {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+
+    .action-buttons .btn:last-child {
+        margin-bottom: 0;
+    }
+
+    /* Hide certain columns on small screens */
+    .table th.d-none.d-md-table-cell,
+    .table td.d-none.d-md-table-cell {
+        display: none;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .main-content {
+        margin-left: 60px;
+    }
+    .left-sidebar.open ~ .main-content {
+        margin-left: 200px;
+    }
+    .container {
+        max-width: 100%;
+        padding: 0 10px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .main-content {
+        margin-left: 50px;
+    }
+    .left-sidebar.open ~ .main-content {
+        margin-left: 180px;
+    }
+    .container {
+        max-width: 100%;
+        padding: 0 5px;
+    }
+
+    .profile-image {
+        width: 40px;
+        height: 40px;
+    }
+}

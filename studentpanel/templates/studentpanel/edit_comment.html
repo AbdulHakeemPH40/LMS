@@ -1,0 +1,23 @@
+{% extends 'studentpanel/student_base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block title %}Edit Comment{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Edit Comment</h4>
+            <form method="post" action="{% url 'edit_comment' comment.id %}">
+                {% csrf_token %}
+                <div class="mb-3">
+                    {{ form.message|add_class:"form-control" }}
+                </div>
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+                <a href="{% url 'course_detail' comment.course.id %}" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

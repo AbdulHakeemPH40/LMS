@@ -1,0 +1,29 @@
+<!-- adminpanel/templates/adminpanel/edit_category.html -->
+{% extends 'adminpanel/admin_base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block title %}Edit Category | Admin Panel{% endblock %}
+
+{% block content %}
+<div class="container mt-5 pt-4">
+    <div class="card shadow-sm p-4 mb-5 bg-white rounded">
+        <h2 class="text-center mb-4">Edit Category</h2>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            <div class="mb-3">
+                {{ form.name.label_tag }}
+                {{ form.name|add_class:"form-control" }}
+                {{ form.name.errors }}
+            </div>
+            <div class="mb-3">
+                {{ form.description.label_tag }}
+                {{ form.description|add_class:"form-control" }}
+                {{ form.description.errors }}
+            </div>
+            <button type="submit" class="btn btn-success w-100">Update Category</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

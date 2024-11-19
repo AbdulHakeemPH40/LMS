@@ -1,0 +1,79 @@
+/* footer.css */
+
+/* Footer Styles */
+.footer {
+    position: relative; /* Ensure the footer stays at the bottom of the viewport */
+    bottom: 0;
+    left: 78px; /* Initial left based on closed sidebar */
+    width: calc(100% - 78px); /* Adjust width based on sidebar state */
+    transition: left 0.3s ease, width 0.3s ease; /* Smooth transitions for sidebar toggle */
+    z-index: 1000; /* Ensure the footer stays above other elements */
+    background-color: var(--navbar-background); /* Use theme variable for background */
+    color: var(--text-color); /* Use theme variable for text color */
+    padding: 10px 0; /* Padding for content inside the footer */
+    height: 95px; /* Fixed height for consistency */
+    text-align: center; /* Center-align text inside the footer */
+}
+
+.footer p {
+    margin-bottom: 10px;
+}
+
+.footer .social-icons a {
+    color:white;
+    margin: 0 10px;
+    font-size: 20px;
+    transition: color 0.3s;
+  }
+  
+
+  .footer .social-icons a:hover {
+    color: var(--primary-color);
+  }
+  
+  
+/* Footer adjustment for open sidebar */
+.wrapper.sidebar-open footer.footer {
+    left: 250px; /* Adjust left position for expanded sidebar */
+    width: calc(100% - 250px); /* Adjust width for expanded sidebar */
+}
+
+/* Responsive Adjustments */
+/* For small and medium screens where sidebar collapses */
+@media (max-width: 991px) {
+    .footer {
+        padding: 10px 5px; /* Reduce padding for very small screens */
+        flex-direction: column; /* Ensure vertical alignment */
+        position: relative;
+    }
+
+    .footer p {
+        font-size: 12px; /* Smaller font size for compact design */
+
+    }
+
+    .footer .social-icons a {
+        font-size: 18px; /* Adjust icon size for smaller screens */
+    }
+}
+
+/* For extra small screens */
+@media (max-width: 576px) {
+    .footer {
+        padding: 10px 5px; /* Reduce padding for very small screens */
+        flex-direction: column; /* Ensure vertical alignment */
+        position: relative;
+    }
+
+    .footer .social-icons {
+        gap: 5px; /* Reduce spacing between icons */
+    }
+
+    .footer p {
+        font-size: 11px; /* Smaller font size */
+    }
+
+    .footer .social-icons a {
+        font-size: 16px; /* Adjust icon size */
+    }
+}

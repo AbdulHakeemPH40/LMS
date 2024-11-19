@@ -1,0 +1,201 @@
+/* Light Mode (default) */
+:root {
+    --primary-color: #2575fc;
+    --secondary-color: #6a11cb;
+    --navbar-text-color: #333;
+    --navbar-background: rgba(255, 255, 255, 0.95);
+    --background-color: #ffffff;
+    --text-color: #333333;
+    --card-background: #ffffff;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Dark Mode */
+[data-theme="dark"] {
+    --primary-color: #0d6efd;
+    --secondary-color: #1e3a8a;
+    --navbar-text-color: #e9ecef;
+    --navbar-background: #121212;
+    --background-color: #121212;
+    --text-color: #e9ecef;
+    --card-background: #1e1e1e;
+    --shadow-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Navbar Styles */
+.navbar {
+    background-color: var(--navbar-background); /* Navbar adapts to theme */
+    box-shadow: 0 4px 12px var(--shadow-color); /* Soft shadow */
+    backdrop-filter: blur(10px); /* Subtle blur effect */
+}
+
+.navbar-brand {
+    font-weight: bold;
+    color: var(--navbar-text-color); /* Brand adapts to theme */
+    
+}
+.navbar-brand:hover {
+    color: var(--navbar-hover-color); /* Change color on hover */
+    text-decoration: none; /* Remove underline on hover */
+    transition: color 0.3s ease-in-out; /* Ensure smooth transition */
+}
+
+.navbar-nav .nav-link {
+    font-size: 16px;
+    color: var(--navbar-text-color); /* Links adapt to theme */
+    transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link.active {
+    font-weight: bold;
+    color: var(--primary-color); /* Active link color */
+}
+
+.navbar-nav .nav-link:hover {
+    color: var(--primary-color); /* Hover color remains primary */
+}
+
+.navbar-nav .btn {
+    color: var(--navbar-text-color); /* Button text adapts to theme */
+    border-color: var(--navbar-text-color); /* Button border adapts */
+}
+
+.navbar-nav .btn:hover {
+    background-color: var(--primary-color); /* Button background on hover */
+    color: #fff;
+    border-color: var(--primary-color);
+}
+
+
+/* General Styles */
+/* Hero Section */
+.mentor-hero-section {
+    height: 60vh;
+    background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+}
+
+.mentor-hero-section h1 {
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+.mentor-hero-section p {
+    font-size: 1.25rem;
+}
+
+/* Mentors Overview */
+.mentors-overview {
+    padding: 80px 0;
+    background-color: var(--background-color);
+}
+
+.mentors-overview h2 {
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    color: var(--text-color);
+}
+
+.mentor-card {
+    border: none;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    border-radius: 15px;
+    overflow: hidden;
+    background-color: var(--card-background);
+    box-shadow: 0 10px 20px var(--shadow-color);
+    margin-bottom: 25px;
+}
+
+.mentor-card:hover {
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: 0 15px 30px var(--shadow-color);
+}
+
+.mentor-card img {
+    object-fit: cover;
+    height: 250px;
+    width: 100%;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.mentor-card h5 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.mentor-card .btn {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.mentor-card .btn:hover {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+/* Mentor Details Section */
+.mentor-details {
+    background-color: var(--background-color); /* Light or dark background depending on the theme */
+    color: var(--text-color); /* Light or dark text depending on the theme */
+    padding: 60px 0;
+}
+
+/* Dark Mode - Ensure a dark background and light text */
+[data-theme="dark"] .mentor-details {
+    background-color: var(--card-background); /* Darker background in dark mode */
+    color: var(--text-color); /* Light text in dark mode */
+}
+
+.mentor-details h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: var(--text-color);
+}
+
+.mentor-details ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.mentor-details ul li {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    color: var(--text-color);
+}
+
+.mentor-details p {
+    font-size: 1rem;
+    color: var(--text-color);
+}
+
+.footer {
+    padding: 15px 0;
+    text-align: center;
+    box-shadow: 0 -2px 8px var(--shadow-color); /* Softer shadow */
+    font-size: 14px;
+}
+
+.footer .social-icons {
+    margin-top: 10px;
+}
+
+.footer .social-icons a {
+    color:white;
+    margin: 0 10px;
+    font-size: 20px;
+    transition: color 0.3s;
+}
+
+
+.footer .social-icons a:hover {
+    color: var(--primary-color); /* Hover effect for social icons */
+}

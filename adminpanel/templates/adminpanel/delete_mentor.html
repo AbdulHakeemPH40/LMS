@@ -1,0 +1,15 @@
+{% extends 'adminpanel/admin_base.html' %}
+
+{% block title %}Delete Mentor{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Delete Mentor</h2>
+    <p>Are you sure you want to delete {{ mentor.user.get_full_name }}?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Yes, Delete</button>
+        <a href="{% url 'manage_mentors' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

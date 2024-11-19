@@ -1,0 +1,53 @@
+<!-- adminpanel/manage_contact_submissions.html -->
+{% extends 'adminpanel/admin_base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %}Contact Form Submissions | Admin Panel{% endblock %}
+
+
+{% block content %}
+<div class="container mt-5 pt-4">
+    <h2>Contact Form Submissions</h2>
+
+    {% if contact_submissions %}
+    <div class="card mt-4">
+        <div class="card-header">
+            <h4>Submitted Contact Forms</h4>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Subject</th>
+                        <th>Submitted At</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for submission in contact_submissions %}
+                    <tr>
+                        <td>{{ submission.name }}</td>
+                        <td>{{ submission.email }}</td>
+                        <td>{{ submission.subject }}</td>
+                        <td>{{ submission.submitted_at|date:"F j, Y, g:i a" }}</td>
+                        <td>
+                            <a href="{% url 'view_contact' submission.id %}" class="btn btn-primary btn-sm">View</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center">No submissions yet.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% else %}
+    <p>No contact form submissions available.</p>
+    {% endif %}
+</div>
+{% endblock %}

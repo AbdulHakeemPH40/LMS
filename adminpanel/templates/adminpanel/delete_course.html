@@ -1,0 +1,19 @@
+<!-- adminpanel/templates/adminpanel/delete_course.html -->
+{% extends 'adminpanel/admin_base.html' %}
+{% load static %}
+
+{% block title %}Delete Course | Admin Panel{% endblock %}
+
+{% block content %}
+<div class="container mt-5 pt-4">
+    <div class="card shadow-sm p-4 mb-5 bg-white rounded text-center">
+        <h2 class="text-danger mb-4">Confirm Course Deletion</h2>
+        <p>Are you sure you want to delete the course "<strong>{{ course.title }}</strong>"? This action cannot be undone.</p>
+        <form method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger me-3">Yes, Delete</button>
+            <a href="{% url 'manage_courses' %}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

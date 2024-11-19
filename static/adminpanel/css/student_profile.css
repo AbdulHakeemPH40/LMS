@@ -1,0 +1,906 @@
+/* Google Font Link */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* CSS Variables for Theming */
+/* Light Mode (default) */
+:root {
+    --primary-color: #2575fc; /* Bright blue */
+    --secondary-color: #6a11cb; /* Deep purple */
+    --navbar-background: rgba(255, 255, 255, 0.95); /* Slightly transparent white */
+    --navbar-text-color: #333333; /* Dark gray */
+    --sidebar-background: #f0f0f0; /* Light gray for sidebar */
+    --sidebar-text-color: #333333;
+    --background-color: #ffffff; /* White background */
+    --text-color: #333333; /* Dark gray text */
+    --card-background: #ffffff; /* White card background */
+    --shadow-color: rgba(0, 0, 0, 0.1); /* Light shadow */
+    --overlay-color: rgba(0, 0, 0, 0.6); /* Dark overlay */
+    --link-hover-color: #0056b3; /* Darker blue for links on hover */
+    --input-background: #ffffff; /* White input fields */
+    --input-text-color: #333333; /* Dark gray text in inputs */
+}
+
+/* Dark Mode */
+[data-theme="dark"] {
+    --primary-color: #1a73e8; /* Lighter blue for better contrast */
+    --secondary-color: #5e35b1; /* Lighter purple */
+    --navbar-background: #1f1f1f; /* Dark gray */
+    --navbar-text-color: #e0e0e0; /* Light gray */
+    --sidebar-background: #2c2c2c; /* Darker gray for sidebar */
+    --sidebar-text-color: #e0e0e0;
+    --background-color: #121212; /* Almost black */
+    --text-color: #e0e0e0; /* Light gray text */
+    --card-background: #1e1e1e; /* Dark gray for cards */
+    --shadow-color: rgba(0, 0, 0, 0.5); /* Darker shadow */
+    --overlay-color: rgba(0, 0, 0, 0.8); /* Dark overlay */
+    --link-hover-color: #82b1ff; /* Light blue for links on hover */
+    --input-background: #2c2c2c; /* Dark gray input fields */
+    --input-text-color: #e0e0e0; /* Light gray text in inputs */
+}
+
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    background-image: url('https://cdn.pixabay.com/photo/2021/07/20/03/39/fisherman-6479663_1280.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+/* Remove background image in dark mode for better readability */
+[data-theme="dark"] body {
+    background-image: none;
+}
+
+/* Navbar Styles */
+.navbar {
+    background-color: var(--navbar-background);
+    box-shadow: 0 4px 12px var(--shadow-color);
+    backdrop-filter: blur(10px);
+    height: 60px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    transition: background-color 0.3s ease;
+}
+
+.navbar-brand {
+    font-weight: bold;
+    color: var(--navbar-text-color);
+    font-size: 1.2rem;
+    text-decoration: none;
+}
+
+.navbar-brand:hover {
+    color: var(--link-hover-color);
+    text-decoration: none;
+    transition: color 0.3s ease-in-out;
+}
+
+.navbar-nav {
+    display: flex;
+    list-style: none;
+    gap: 15px;
+    align-items: center;
+}
+
+.navbar-nav .nav-item {
+    margin-left: 20px;
+}
+
+.navbar-nav .nav-link {
+    font-size: 16px;
+    color: var(--navbar-text-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+    color: var(--primary-color);
+}
+
+/* Profile Image */
+.profile-image {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 1px solid var(--navbar-background);
+    transition: transform 0.3s ease;
+}
+.profile-image:hover {
+    transform: scale(1.1);
+}
+/* Responsive Design for Navbar */
+@media (max-width: 991px) {
+    .navbar {
+        flex-wrap: wrap;
+        padding: 10px;
+    }
+
+    .navbar-brand {
+        font-size: 1rem;
+    }
+
+    .navbar-nav {
+        flex-direction: column;
+        width: 100%;
+        text-align: center;
+        gap: 10px;
+    }
+
+    .navbar-nav .nav-item {
+        margin-left: 0;
+    }
+
+    .profile-image {
+        width: 25px;
+        height: 25px;
+    }
+}
+
+@media (max-width: 575px) {
+    .navbar {
+        height: auto;
+        flex-direction: column;
+        align-items: center;
+        padding: 5px;
+    }
+
+    .navbar-brand {
+        font-size: 0.9rem;
+        margin-bottom: 10px;
+    }
+
+    .navbar-nav {
+        gap: 5px;
+    }
+
+    .navbar-nav .nav-link {
+        font-size: 14px;
+    }
+
+    .profile-image {
+        margin-top: 5px;
+    }
+}
+
+/* Sidebar Styles */
+.left-sidebar {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    height: calc(100% - 60px);
+    width: 78px;
+    background: var(--sidebar-background);
+    color: var(--sidebar-text-color);
+    padding: 10px 14px;
+    z-index: 999;
+    transition: width 0.3s ease, background 0.3s ease, color 0.3s ease;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Dark Theme Support */
+[data-theme="dark"] .left-sidebar {
+    background: var(--sidebar-background);
+    color: var(--sidebar-text-color);
+}
+
+/* Sidebar Expanded State */
+.left-sidebar.open {
+    width: 250px;
+}
+
+/* Logo Details */
+.left-sidebar .logo-details {
+    height: 60px;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.left-sidebar .logo-details .icon,
+.left-sidebar .logo-details .logo_name {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.left-sidebar.open .logo-details .icon,
+.left-sidebar.open .logo-details .logo_name {
+    opacity: 1;
+}
+
+/* Toggle Button */
+.left-sidebar .logo-details #btn {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    font-size: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.5s ease;
+}
+
+.left-sidebar.open .logo-details #btn {
+    transform: translateY(-50%) rotate(180deg);
+}
+
+/* Navigation List */
+.left-sidebar .nav-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 10px;
+    flex-grow: 1;
+}
+
+.left-sidebar .nav-list li {
+    position: relative;
+    margin: 10px 0;
+}
+
+.left-sidebar .nav-list li a {
+    display: flex;
+    align-items: center;
+    height: 40px;
+    color: inherit;
+    padding: 0 10px;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: background 0.3s, color 0.3s;
+    font-size: 14px;
+}
+
+.left-sidebar .nav-list li a:hover {
+    background: rgba(0, 0, 0, 0.1);
+    color: var(--primary-color);
+}
+
+.left-sidebar .nav-list li a .links_name {
+    margin-left: 10px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+}
+
+.left-sidebar.open .nav-list li a .links_name {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Sidebar Icons */
+.left-sidebar .nav-list li a i {
+    min-width: 20px;
+    text-align: center;
+    font-size: 18px;
+}
+
+/* Tooltips for Collapsed Sidebar */
+.left-sidebar .nav-list li .tooltip {
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #fff;
+    color: #11101D;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+}
+
+.left-sidebar .nav-list li:hover .tooltip {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.left-sidebar.open .nav-list li .tooltip {
+    display: none;
+}
+
+/* Search Input */
+.left-sidebar .nav-list li .search {
+    display: flex;
+    align-items: center;
+}
+
+.left-sidebar .nav-list li .search input {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    outline: none;
+    margin-left: 10px;
+    width: 100%;
+    display: none;
+    transition: width 0.3s;
+    font-size: 14px;
+}
+
+.left-sidebar.open .nav-list li .search input {
+    display: block;
+}
+
+/* Responsive Adjustments for Sidebar */
+@media (max-width: 768px) {
+    .left-sidebar {
+        width: 60px;
+    }
+
+    .left-sidebar.open {
+        width: 200px;
+    }
+
+    .left-sidebar .logo-details {
+        height: 50px;
+    }
+
+    .left-sidebar .nav-list li a {
+        height: 35px;
+        font-size: 12px;
+    }
+
+    .left-sidebar .nav-list li a i {
+        font-size: 16px;
+    }
+
+    .left-sidebar .nav-list li a .links_name {
+        font-size: 12px;
+    }
+
+    .left-sidebar .nav-list li .tooltip {
+        padding: 3px 6px;
+        font-size: 10px;
+    }
+
+    .left-sidebar .nav-list li .search input {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 576px) {
+    .left-sidebar {
+        width: 50px;
+    }
+
+    .left-sidebar.open {
+        width: 180px;
+    }
+
+    .left-sidebar .nav-list li a {
+        height: 30px;
+        font-size: 11px;
+    }
+
+    .left-sidebar .nav-list li a i {
+        font-size: 14px;
+    }
+
+    .left-sidebar .nav-list li a .links_name {
+        font-size: 11px;
+    }
+
+    /* Hide sidebar on extra small screens */
+    .left-sidebar {
+        display: none;
+    }
+
+    /* Show a toggle button for the sidebar */
+    .navbar #sidebarToggle {
+        display: block;
+        font-size: 24px;
+        cursor: pointer;
+    }
+}
+
+/* Footer Styles */
+.footer {
+    position: relative;
+    bottom: 0;
+    left: 78px;
+    width: calc(100% - 78px);
+    transition: left 0.3s ease, width 0.3s ease;
+    z-index: 1000;
+    background-color: var(--navbar-background);
+    color: var(--text-color);
+    padding: 10px 0;
+    text-align: center;
+}
+
+.footer p {
+    color: white;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.footer .social-icons a {
+    color: white;
+    margin: 0 10px;
+    font-size: 20px;
+    transition: color 0.3s;
+}
+
+.footer .social-icons a:hover {
+    color: var(--primary-color);
+}
+
+/* Footer adjustment for open sidebar */
+.left-sidebar.open ~ .footer {
+    left: 250px;
+    width: calc(100% - 250px);
+}
+
+/* Responsive Adjustments for Footer */
+@media (max-width: 991px) {
+    .footer {
+        left: 0;
+        width: 100%;
+        padding: 10px 5px;
+    }
+
+    .footer p {
+        font-size: 12px;
+    }
+
+    .footer .social-icons a {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 576px) {
+    .footer {
+        padding: 10px 5px;
+    }
+
+    .footer .social-icons a {
+        font-size: 16px;
+        margin: 0 5px;
+    }
+
+    .footer p {
+        font-size: 11px;
+    }
+}
+
+/* Profile Background */
+.profile-background {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+}
+
+.profile-background::before {
+    content: "";
+    background-image: url('https://cdn.pixabay.com/photo/2021/07/20/03/39/fisherman-6479663_1280.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    filter: brightness(0.7);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.profile-pic-wrapper {
+    width: 150px;
+    height: 150px;
+    margin: -75px auto 20px; /* Position profile pic overlapping background */
+    position: relative;
+    z-index: 1;
+}
+
+.profile-pic {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+    object-fit: cover;
+}
+
+.profile-pic-hover {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.profile-pic-wrapper:hover .profile-pic-hover {
+    display: block;
+}
+
+.personal-info-wrapper h5 {
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border: none;
+    color: #ffffff;
+    transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: var(--secondary-color);
+}
+
+.card, .modal-content {
+    background-color: var(--card-background);
+    color: var(--text-color);
+    box-shadow: 0 4px 12px var(--shadow-color);
+}
+
+.modal-backdrop.show {
+    background-color: var(--overlay-color);
+}
+
+h1, h2, h3, h4, h5, h6, p, a, span, li, dt, dd, blockquote, label {
+    color: var(--text-color);
+}
+
+a:hover {
+    color: var(--link-hover-color);
+}
+
+/* Form Inputs */
+input, select, textarea {
+    background-color: var(--input-background);
+    color: var(--input-text-color);
+    border: 1px solid var(--shadow-color);
+    padding: 8px;
+    border-radius: 4px;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+input::placeholder {
+    color: var(--text-color);
+    opacity: 0.7;
+}
+
+/* Labels */
+label {
+    color: var(--text-color);
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+/* Adjust borders and outlines in dark mode */
+[data-theme="dark"] input, [data-theme="dark"] select, [data-theme="dark"] textarea {
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.text-muted {
+    color: var(--text-color) !important;
+}
+
+/* Profile Section Styles */
+.profile-section {
+    padding: 20px 0;
+    margin-left: 78px;
+    transition: margin-left 0.3s ease;
+    margin-top: 25px;
+}
+
+.left-sidebar.open ~ .profile-section {
+    margin-left: 250px;
+}
+
+/* Responsive Adjustments for Profile Section */
+@media (max-width: 991px) {
+    .profile-section {
+        margin-left: 0;
+        padding: 15px 10px;
+    }
+
+    .profile-pic-wrapper {
+        width: 120px;
+        height: 120px;
+        margin: -60px auto 15px;
+    }
+
+    .profile-pic {
+        width: 120px;
+        height: 120px;
+    }
+
+    h2, h5 {
+        font-size: 1.5rem;
+    }
+
+    .card {
+        padding: 15px;
+    }
+
+    .card-body {
+        text-align: center;
+    }
+
+    .text-end {
+        text-align: center;
+    }
+
+    .text-muted {
+        font-size: 0.9rem;
+    }
+
+    .row.mb-3 {
+        flex-direction: column;
+    }
+
+    .row.mb-3 .col-md-6 {
+        margin-bottom: 10px;
+    }
+}
+
+@media (max-width: 768px) {
+    .profile-background {
+        height: 200px;
+    }
+
+    .profile-pic-wrapper {
+        width: 100px;
+        height: 100px;
+        margin: -50px auto 15px;
+    }
+
+    .profile-pic {
+        width: 100px;
+        height: 100px;
+    }
+
+    h2, h5 {
+        font-size: 1.2rem;
+    }
+
+    .card {
+        padding: 10px;
+    }
+
+    label, p {
+        font-size: 0.9rem;
+    }
+
+    .btn-primary {
+        padding: 6px 12px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .profile-background {
+        height: 150px;
+    }
+
+    .profile-pic-wrapper {
+        width: 80px;
+        height: 80px;
+        margin: -40px auto 10px;
+    }
+
+    .profile-pic {
+        width: 80px;
+        height: 80px;
+    }
+
+    h2, h5 {
+        font-size: 1rem;
+    }
+
+    .card {
+        padding: 8px;
+    }
+
+    .row.mb-3 {
+        gap: 10px;
+    }
+
+    .btn-primary {
+        padding: 5px 10px;
+        font-size: 0.8rem;
+    }
+
+    label, p {
+        font-size: 0.8rem;
+    }
+}
+
+/* Additional Responsive Adjustments */
+@media (max-width: 480px) {
+    .navbar-nav .nav-link {
+        font-size: 12px;
+    }
+
+    .footer p {
+        font-size: 10px;
+    }
+
+    .footer .social-icons a {
+        font-size: 14px;
+        margin: 0 3px;
+    }
+
+    .profile-section {
+        padding: 10px 5px;
+    }
+
+    input, select, textarea {
+        font-size: 12px;
+    }
+
+    label {
+        font-size: 12px;
+    }
+}
+
+/* Hide elements that don't fit on small screens */
+@media (max-width: 360px) {
+    .navbar-brand {
+        font-size: 0.8rem;
+    }
+
+    .profile-pic-wrapper {
+        width: 60px;
+        height: 60px;
+        margin: -30px auto 10px;
+    }
+
+    .profile-pic {
+        width: 60px;
+        height: 60px;
+    }
+
+    h2, h5 {
+        font-size: 0.9rem;
+    }
+
+    .btn-primary {
+        padding: 4px 8px;
+        font-size: 0.7rem;
+    }
+}
+
+/* Ensure the main content doesn't overlap the sidebar */
+.main-content {
+    margin-left: 78px;
+    transition: margin-left 0.3s ease;
+}
+
+.left-sidebar.open ~ .main-content {
+    margin-left: 250px;
+}
+
+@media (max-width: 768px) {
+    .main-content {
+        margin-left: 0;
+    }
+}
+
+/* Adjustments for text and elements to prevent overflow */
+.container, .profile-section, .footer {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+/* Messages Container Styles */
+.messages-container {
+    position: fixed;
+    top: 75px;
+    right: 20px;
+    z-index: 1050;
+    width: auto;
+    max-width: 300px;
+    transition: all 0.3s ease-in-out; /* Smooth transition for layout changes */
+}
+
+/* General Alert Styling */
+.messages .alert {
+    padding: 10px; /* Increase padding for better spacing */
+    font-size: 0.9rem;
+    border-radius: 4px;
+    color: #155724;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid transparent;
+    margin-bottom: 10px; /* Add spacing between alerts */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add slight shadow */
+}
+
+/* Success Alert Styling */
+.alert-success {
+    color: #155724;
+    background-color: #b8f1c5;
+    border-color: #c3e6cb;
+}
+
+/* Close Button Styling */
+.alert .btn-close {
+    color: #155724;
+    opacity: 0.8;
+    font-size: 1rem;
+    margin-left: auto; /* Moves the close button to the end of the alert */
+    cursor: pointer; /* Pointer cursor for better UX */
+}
+
+/* Adjust close button position within alert */
+.alert-dismissible .btn-close {
+    position: relative; /* Ensure it doesn't overlay other content */
+    margin-left: 10px;
+}
+
+/* Alert Background */
+.alert {
+    background-color: var(--card-background);
+    color: var(--text-color);
+    border: 1px solid var(--shadow-color);
+    transition: all 0.3s ease; /* Smooth transitions for changes */
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .messages-container {
+        top: 10px; /* Adjust top position for smaller screens */
+        right: 10px; /* Reduce right margin */
+        max-width: 250px; /* Narrower alert width */
+        
+    }
+
+    .messages .alert {
+        font-size: 0.8rem; /* Smaller font size */
+        padding: 8px; /* Reduce padding */
+        margin-bottom: 8px; /* Smaller spacing between alerts */
+        top: 50px;
+    }
+
+    .alert .btn-close {
+        font-size: 0.8rem; /* Smaller close button */
+    }
+}
+
+@media (max-width: 576px) {
+    .messages-container {
+        top: 5px; /* Further adjust top position */
+        right: 5px; /* Narrower margin for extra-small screens */
+        max-width: 200px; /* Compact alert width */
+    }
+
+    .messages .alert {
+        font-size: 0.75rem; /* Even smaller font size */
+        padding: 6px; /* Further reduce padding */
+        margin-bottom: 6px; /* Compact spacing */
+        top: 50px;
+    }
+
+    .alert .btn-close {
+        font-size: 0.7rem; /* Smallest close button size */
+    }
+}

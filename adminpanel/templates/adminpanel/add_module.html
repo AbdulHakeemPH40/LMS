@@ -1,0 +1,35 @@
+{% extends 'adminpanel/admin_base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block title %}Add Module | Admin Panel{% endblock %}
+
+{% block content %}
+<div class="container mt-5 pt-4">
+    <h2 class="text-center mb-4">Add New Module to {{ course.title }}</h2>
+    
+    <!-- Styled Form Container -->
+    <div class="border p-4 rounded shadow-sm">
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            <div class="mb-3">
+                {{ form.title.label_tag }}
+                {{ form.title|add_class:"form-control" }}
+                {{ form.title.errors }}
+            </div>
+            <div class="mb-3">
+                {{ form.description.label_tag }}
+                {{ form.description|add_class:"form-control" }}
+                {{ form.description.errors }}
+            </div>
+            <div class="mb-3">
+                {{ form.order.label_tag }}
+                {{ form.order|add_class:"form-control" }}
+                {{ form.order.errors }}
+            </div>
+            <button type="submit" class="btn btn-primary">Add Module</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

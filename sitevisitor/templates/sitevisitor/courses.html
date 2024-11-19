@@ -1,0 +1,55 @@
+{% extends 'sitevisitor/base.html' %}
+{% load static %}
+
+{% block title %}Courses - LMS Platform{% endblock %}
+
+{% block custom_css %}
+    <link rel="stylesheet" href="{% static 'sitevisitor/css/site_course.css' %}">
+{% endblock %}
+
+{% block content %}
+    <!-- Hero Section -->
+    <section class="course-section text-center">
+        <div class="container">
+            <h1>Explore Our Courses</h1>
+            <p>Browse a variety of courses from industry experts to enhance your skills.</p>
+        </div>
+    </section>
+
+    <!-- Courses Overview Section -->
+    <section class="courses-overview py-5">
+        <div class="container">
+            <h2 class="text-center">Popular Courses</h2>
+            <div class="row">
+                {% if courses %}
+                    {% for course in courses %}
+                        <div class="col-md-4 mb-4">
+                            <div class="card course-card">
+                                <img src="{{ course.thumbnail.url }}" class="card-img-top" alt="{{ course.title }}">
+                                <div class="card-body">
+                                    <h5 class="card-title"style="text-align:center;">{{ course.title }}</h5>
+                                    <p class="card-text"  style="text-align:center;">{{ course.description|truncatewords:15 }}</p>
+                                    <ul class="course-details">
+                                        <li style="text-align:center;"><strong>Mentor:</strong> {{ course.mentor.user.first_name }} {{ course.mentor.user.last_name }}</li>
+                                        <li style="text-align:center;"><strong>Duration:</strong> {{ course.duration_value }} {% if course.duration_type == 'month' %}
+                                            Month(s)
+                                        {% else %}
+                                            Week(s)
+                                        {% endif %} </li>
+                                        <li style="text-align:center;" ><strong>Price:</strong> ₹ {{ course.price }}</li>
+                                    </ul>
+                                    <div class="d-flex justify-content-center">
+                                        <a href="{% url 'sign_up' %}" class="btn custom-btn">More Info</a>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p class="text-muted text-center">No courses are available at the moment. Please check back later!</p>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

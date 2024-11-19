@@ -1,0 +1,183 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Student Dashboard - LMS Platform{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+    {% block custom_css %}
+        <link rel="stylesheet" href="{% static 'studentpanel/css/student_home.css' %}">
+    {% endblock %}
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top" id="navbar">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'student_home' %}">LMS Platform</a>
+            <!-- Dark Mode Toggle -->
+            <div class="form-check form-switch ms-auto me-3">
+                <input class="form-check-input" type="checkbox" id="darkModeToggle">
+                <label class="form-check-label" for="darkModeToggle"><i class="fas fa-moon"></i></label>
+            </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="studentDropdown"
+                           role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="{% if user.userprofile.profile_image %}{{ user.userprofile.profile_image.url }}{% else %}{% static 'images/default_profile.png' %}{% endif %}" 
+                                alt="Profile" class="profile-image me-2"> 
+                            {{ user.first_name }} {{ user.last_name }}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="studentDropdown">
+                            <li><a class="dropdown-item" href="{% url 'view_profile' %}">My Profile</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{% url 'reset_password' %}">Reset Password</a></li>
+                            <li><a class="dropdown-item" href="{% url 'sign_out' %}">Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Layout -->
+    <div class="page-layout d-flex">
+        <!-- Sidebar -->
+        <div class="left-sidebar" id="sidebar">
+            <div class="logo-details">
+                <i class='bx bxl-lms-platform icon'></i>
+                <span class="logo_name">LMS</span>
+                <i class='bx bx-menu' id="btn"></i>
+            </div>
+            <ul class="nav-list">
+                <li>
+                    <a href="#" class="search">
+                        <i class='bx bx-search'></i>
+                        <input type="text" placeholder="Search...">
+                    </a>
+                    <span class="tooltip">Search</span>
+                </li>
+                <li>
+                    <a href="{% url 'student_home' %}">
+                        <i class='bx bx-grid-alt'></i>
+                        <span class="links_name">Dashboard</span>
+                    </a>
+                    <span class="tooltip">Dashboard</span>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class='bx bx-book-open'></i>
+                        <span class="links_name">My Courses</span>
+                    </a>
+                    <span class="tooltip">My Courses</span>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class='bx bx-calendar'></i>
+                        <span class="links_name">Schedule</span>
+                    </a>
+                    <span class="tooltip">Schedule</span>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class='bx bx-chat'></i>
+                        <span class="links_name">Messages</span>
+                    </a>
+                    <span class="tooltip">Messages</span>
+                </li>
+        </div>
+
+        <!-- Messages Container -->
+        <div class="messages-container">
+            {% if messages %}
+                <ul class="messages list-unstyled">
+                    {% for message in messages %}
+                        <li class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+
+        <!-- Main Content Block -->
+        <div class="main-content flex-grow-1">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer bg-dark text-white text-center py-4">
+        <div class="container">
+            <p>© 2024 LMS Platform. All rights reserved.</p>
+            <ul class="social-icons list-inline">
+                <li class="list-inline-item"><a href="#"><i class="bx bxl-facebook"></i></a></li>
+                <li class="list-inline-item"><a href="#"><i class="bx bxl-twitter"></i></a></li>
+                <li class="list-inline-item"><a href="#"><i class="bx bxl-linkedin"></i></a></li>
+                <li class="list-inline-item"><a href="#"><i class="bx bxl-instagram"></i></a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src='https://unpkg.com/boxicons@2.1.4/dist/boxicons.js'></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Dark Mode Toggle
+        const toggleSwitch = document.getElementById('darkModeToggle');
+        const currentTheme = localStorage.getItem('theme') ? localStorage.getItem('theme') : null;
+
+        if (currentTheme) {
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            if (currentTheme === 'dark') {
+                toggleSwitch.checked = true;
+            }
+        }
+
+        toggleSwitch.addEventListener('change', function (e) {
+            if (e.target.checked) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'light');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // Sidebar Toggle
+        const sidebar = document.getElementById("sidebar");
+        const closeBtn = document.getElementById("btn");
+
+        closeBtn.addEventListener("click", () => {
+            sidebar.classList.toggle("open");
+
+            // Adjust main content width based on sidebar state
+            const mainContent = document.querySelector(".main-content");
+            if (sidebar.classList.contains("open")) {
+                mainContent.style.marginLeft = "250px";
+                mainContent.style.width = "calc(100% - 250px)";
+            } else {
+                mainContent.style.marginLeft = "78px";
+                mainContent.style.width = "calc(100% - 78px)";
+            }
+        });
+        // Auto-dismiss messages after 5 seconds
+        setTimeout(() => {
+            const alerts = document.querySelectorAll('.messages .alert');
+            alerts.forEach(alert => {
+                const bsAlert = new bootstrap.Alert(alert);
+                bsAlert.close();
+            });
+        }, 5000); // 5 seconds
+    </script>
+</body>
+</html>

@@ -1,0 +1,266 @@
+/* adminpanel/css/manage_courses.css */
+
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* CSS Variables for Theming */
+:root {
+    --primary-color: #2575fc;
+    --secondary-color: #6a11cb;
+    --navbar-background: rgba(255, 255, 255, 0.95);
+    --navbar-text-color: #333;
+    --sidebar-background-light: #e9e9e9;
+    --sidebar-text-color-light: #333;
+    --background-color: #ffffff;
+    --text-color: #333333;
+    --card-background: #ffffff;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --link-hover-color: #0056b3;
+    --table-background: #ffffff;
+    --table-text-color: #333333;
+    --table-border-color: #dee2e6;
+    --table-hover-background: rgba(0, 0, 0, 0.05);
+}
+
+/* Dark Mode */
+[data-theme="dark"] {
+    --primary-color: #0d6efd;
+    --secondary-color: #1e3a8a;
+    --navbar-background: #1f1f1f;
+    --navbar-text-color: #e9ecef;
+    --sidebar-background-light: #11101D;
+    --sidebar-text-color-light: #fff;
+    --background-color: #121212;
+    --text-color: #f1f1f1;
+    --card-background: #1e1e1e;
+    --shadow-color: rgba(0, 0, 0, 0.5);
+    --link-hover-color: #66aaff;
+    --table-background: #1e1e1e;
+    --table-text-color: #f1f1f1;
+    --table-border-color: #343a40;
+    --table-hover-background: rgba(255, 255, 255, 0.1);
+}
+
+/* General Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+.main-content {
+    margin-left: 25px; /* Adjust based on sidebar width */
+    padding-top: 15px; /* Adjust based on navbar height */
+    transition: margin-left 0.3s ease;
+    min-height: calc(100vh - 60px - 95px);
+    padding-bottom: 95px; /* To prevent overlap with footer */
+}
+
+.left-sidebar.open ~ .main-content {
+    margin-left: 250px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.header-flex {
+    margin-top: 20px;
+}
+
+.header-flex h2 {
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.header-flex .btn {
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-primary:hover {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+}
+
+.table-responsive {
+    margin-top: 20px;
+}
+
+.table {
+    margin-bottom: 0;
+    color: var(--table-text-color);
+    background-color: var(--table-background);
+    border-color: var(--table-border-color);
+}
+
+.table thead th {
+    background-color: var(--card-background);
+    color: var(--text-color);
+    border-bottom: 2px solid var(--table-border-color);
+}
+
+.table-hover tbody tr:hover {
+    background-color: var(--table-hover-background);
+}
+
+.table td, .table th {
+    vertical-align: middle;
+    border-color: var(--table-border-color);
+}
+
+.action-buttons {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+}
+
+.action-buttons .btn {
+    margin: 2px;
+    flex: 1;
+    white-space: nowrap;
+}
+
+.btn {
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.btn i {
+    margin-right: 5px;
+}
+
+.btn-outline-info {
+    color: #17a2b8;
+    border-color: #17a2b8;
+}
+
+.btn-outline-info:hover {
+    background-color: #17a2b8;
+    color: #fff;
+}
+
+.btn-outline-warning {
+    color: #ffc107;
+    border-color: #ffc107;
+}
+
+.btn-outline-warning:hover {
+    background-color: #ffc107;
+    color: #fff;
+}
+
+.btn-outline-danger {
+    color: #dc3545;
+    border-color: #dc3545;
+}
+
+.btn-outline-danger:hover {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+/* Tooltip Styling */
+.tooltip-inner {
+    background-color: var(--shadow-color);
+    color: var(--text-color);
+}
+
+.tooltip.bs-tooltip-top .arrow::before {
+    border-top-color: var(--shadow-color);
+}
+
+.tooltip.bs-tooltip-bottom .arrow::before {
+    border-bottom-color: var(--shadow-color);
+}
+
+/* Adjusting Margins and Padding */
+.main-content .container {
+    margin-bottom: 25px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 991.98px) {
+    .main-content {
+        margin-left: 60px;
+    }
+    .left-sidebar.open ~ .main-content {
+        margin-left: 200px;
+    }
+    .container {
+        max-width: 100%;
+        padding: 0 10px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .header-flex {
+        flex-direction: column;
+        align-items: flex-start !important;
+    }
+
+    .header-flex h2 {
+        margin-bottom: 10px;
+    }
+
+    .header-flex .btn {
+        width: 100%;
+    }
+
+    .action-buttons {
+        flex-wrap: nowrap;
+        justify-content: space-between;
+    }
+
+    .action-buttons .btn {
+        flex: 1;
+        margin: 2px;
+        font-size: 12px;
+        padding: 5px;
+    }
+
+    /* Hide certain columns on small screens */
+    .table th.d-none.d-md-table-cell,
+    .table td.d-none.d-md-table-cell {
+        display: none;
+    }
+
+    .main-content {
+        margin-left: 10px;
+    }
+    .left-sidebar.open ~ .main-content {
+        margin-left: 180px;
+    }
+    .container {
+        max-width: 100%;
+        padding: 0 5px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .main-content {
+        margin-left: 25px;
+        margin-right: 25px;
+        max-width: 90%;
+    }
+    .left-sidebar.open ~ .main-content {
+        margin-left: 180px;
+    }
+    .container {
+        max-width: 100%;
+        padding: 0 5px;
+    }
+
+    .action-buttons .btn {
+        font-size: 10px;
+        padding: 3px;
+        margin: 1px;
+    }
+}

@@ -1,0 +1,88 @@
+/* static/adminpanel/css/edit_course.css */
+
+/* General Styles */
+body {
+    background-color: #f8f9fa;
+}
+
+/* Card Styles */
+.card {
+    border: none;
+    border-radius: 15px;
+    background: linear-gradient(145deg, #ffffff, #e6e6e6);
+    box-shadow:  5px 5px 10px #bebebe,
+                -5px -5px 10px #ffffff;
+}
+
+/* Form Control Enhancements */
+.form-control,
+.form-select {
+    border-radius: 10px;
+    box-shadow: inset 5px 5px 10px #d1d9e6,
+                inset -5px -5px 10px #ffffff;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus,
+.form-select:focus {
+    box-shadow: inset 3px 3px 5px #d1d9e6,
+                inset -3px -3px 5px #ffffff;
+    border-color: #0d6efd;
+}
+
+/* Button Styles */
+.btn-success {
+    background-color: #28a745;
+    border: none;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 10px;
+    box-shadow: 5px 5px 10px #bebebe,
+                -5px -5px 10px #ffffff;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+    box-shadow: 3px 3px 6px #bebebe,
+                -3px -3px 6px #ffffff;
+}
+
+/* Floating Labels */
+.form-floating > .form-control,
+.form-floating > .form-select {
+    height: calc(3.5rem + 2px);
+}
+
+.form-floating > label {
+    padding: 0.75rem;
+}
+
+/* Tooltip Styles */
+.btn-outline-secondary {
+    border: none;
+    background: none;
+}
+
+.btn-outline-secondary:hover {
+    background-color: transparent;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 576px) {
+    .card {
+        padding: 1.5rem;
+    }
+
+    h2.card-title {
+        font-size: 1.5rem;
+    }
+
+    .btn-lg {
+        padding: 0.75rem;
+        font-size: 1rem;
+    }
+}
+
+/* Smooth Scroll Behavior */
+html {
+    scroll-behavior: smooth;
+}

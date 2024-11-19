@@ -1,0 +1,214 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Admin Dashboard - LMS Platform{% endblock %}</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    {% block custom_css %}
+        <link rel="stylesheet" href="{% static 'adminpanel/css/admin_base.css' %}">
+        <link rel="stylesheet" href="{% static 'adminpanel/css/footer.css' %}">
+        <link rel="stylesheet" href="{% static 'adminpanel/css/left_sidebar.css' %}">
+        <link rel="stylesheet" href="{% static 'adminpanel/css/nav_bar.css' %}">
+        <link rel="stylesheet" href="{% static 'adminpanel/css/messages.css' %}">
+    {% endblock %}
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top" id="navbar">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'admin_home' %}">LMS Admin</a>
+            
+            <!-- Dark Mode Toggle -->
+            <div class="form-check form-switch ms-auto me-3">
+                <input class="form-check-input" type="checkbox" id="darkModeToggle">
+                <label class="form-check-label" for="darkModeToggle"><i class="fas fa-moon"></i></label>
+            </div>
+            
+            <!-- Navbar Toggler for Mobile -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <!-- Navbar Links and Profile Dropdown -->
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <!-- Profile Dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="adminDropdown"
+                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="{% if request.user.userprofile.profile_image %}{{ request.user.userprofile.profile_image.url }}{% else %}{% static 'images/Admins/default_admin.jpg' %}{% endif %}" alt="Profile" class="profile-image me-2">
+                            {{ request.user.username }}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="adminDropdown">
+                            <li><a class="dropdown-item" href="{% url 'admin_profile' %}">My Profile</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{% url 'admin_change_password' %}">Change Password</a></li>
+                            <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Layout -->
+    <div class="wrapper d-flex flex-column" id="wrapper">
+        <div class="page-layout d-flex flex-grow-1">
+            <!-- Sidebar -->
+            <div class="left-sidebar">
+                <div class="logo-details">
+                    <i class='bx bxl-lms-platform icon'></i>
+                    <span class="logo_name">Admin</span>
+                    <i class='bx bx-menu' id="btn" role="button" aria-label="Toggle Sidebar"></i>
+                </div>
+                <ul class="nav-list">
+                    <li>
+                        <a href="{% url 'manage_courses' %}" data-bs-toggle="tooltip" data-bs-placement="right" title="Manage Courses"
+                           class="{% if active_page == 'manage_courses' %}active{% endif %}">
+                            <i class='bx bx-book-open'></i>
+                            <span class="links_name">Manage Courses</span>
+                        </a>
+                    </li>
+	<li>
+                        <a href="{% url 'manage_lessons' %}" data-bs-toggle="tooltip" data-bs-placement="right" title="Manage Lessons"
+                           class="{% if active_page == 'manage_lessons' %}active{% endif %}">
+                            <i class='bx bx-chalkboard'></i>
+                            <span class="links_name">Manage Lessons</span>
+                        </a>
+                    </li>                
+                    <li>
+                        <a href="{% url 'category_list' %}" data-bs-toggle="tooltip" data-bs-placement="right" title="Manage Categories"
+                           class="{% if active_page == 'category_list' %}active{% endif %}">
+                            <i class='bx bx-category'></i>
+                            <span class="links_name">Manage Categories</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'manage_users' %}" data-bs-toggle="tooltip" data-bs-placement="right" title="Manage Users"
+                           class="{% if active_page == 'manage_users' %}active{% endif %}">
+                            <i class='bx bx-user'></i>
+                            <span class="links_name">Manage Users</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'manage_videos' %}" data-bs-toggle="tooltip" data-bs-placement="right" title="Manage Videos"
+                           class="{% if active_page == 'manage_videos' %}active{% endif %}">
+                            <i class='bx bx-video'></i>
+                            <span class="links_name">Manage Videos</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'manage_mentors' %}" data-bs-toggle="tooltip" data-bs-placement="right" title="Manage Mentors"
+                           class="{% if active_page == 'manage_mentors' %}active{% endif %}">
+                            <i class='bx bx-user-circle'></i>
+                            <span class="links_name">Manage Mentors</span>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+
+            <!-- Messages Container -->
+            <div class="messages-container">
+                {% if messages %}
+                    <ul class="messages list-unstyled">
+                        {% for message in messages %}
+                            <li class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+
+            <!-- Main Content Block -->
+            <div class="main-content flex-grow-1">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer bg-dark text-white text-center py-4">
+            <div class="container">
+                <p>© 2024 LMS Platform. All rights reserved.</p>
+                <ul class="social-icons list-inline">
+                    <li class="list-inline-item"><a href="#"><i class="bx bxl-facebook"></i></a></li>
+                    <li class="list-inline-item"><a href="#"><i class="bx bxl-twitter"></i></a></li>
+                    <li class="list-inline-item"><a href="#"><i class="bx bxl-linkedin"></i></a></li>
+                    <li class="list-inline-item"><a href="#"><i class="bx bxl-instagram"></i></a></li>
+                </ul>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src='https://unpkg.com/boxicons@2.1.4/dist/boxicons.js'></script>
+    <script>
+        // Initialize Bootstrap Tooltips
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+
+        // Dark Mode Toggle
+        const toggleSwitch = document.getElementById('darkModeToggle');
+        const currentTheme = localStorage.getItem('theme') ? localStorage.getItem('theme') : null;
+
+        if (currentTheme) {
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            if (currentTheme === 'dark') {
+                toggleSwitch.checked = true;
+            }
+        }
+
+        toggleSwitch.addEventListener('change', function (e) {
+            if (e.target.checked) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'light');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // Sidebar Toggle
+        const sidebar = document.querySelector(".left-sidebar");
+        const closeBtn = document.querySelector("#btn");
+        const wrapper = document.getElementById('wrapper'); // Added wrapper
+
+        closeBtn.addEventListener("click", () => {
+            sidebar.classList.toggle("open");
+            wrapper.classList.toggle("sidebar-open"); // Toggle class on wrapper
+            menuBtnChange();
+        });
+
+        function menuBtnChange() {
+            if (sidebar.classList.contains("open")) {
+                closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");
+            } else {
+                closeBtn.classList.replace("bx-menu-alt-right", "bx-menu");
+            }
+        }
+
+        // Auto-dismiss messages after 5 seconds
+        setTimeout(() => {
+            const alerts = document.querySelectorAll('.messages .alert');
+            alerts.forEach(alert => {
+                const bsAlert = new bootstrap.Alert(alert);
+                bsAlert.close();
+            });
+        }, 5000); // 5 seconds
+    </script>
+</body>
+</html>

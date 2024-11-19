@@ -1,0 +1,81 @@
+{% extends 'adminpanel/admin_base.html' %}
+{% load widget_tweaks %}
+
+{% block title %}Edit Mentor{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card border-primary">
+        <div class="card-header bg-primary text-white">
+            <h2 class="text-center mb-0">Edit Mentor</h2>
+        </div>
+        <div class="card-body p-4">
+            <!-- Display error messages if form is invalid -->
+            {% if form.errors %}
+                <div class="alert alert-danger">
+                    <ul class="mb-0">
+                        {% for field in form %}
+                            {% for error in field.errors %}
+                                <li>{{ field.label }}: {{ error }}</li>
+                            {% endfor %}
+                        {% endfor %}
+                        {% for error in form.non_field_errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+
+            <!-- Form to edit mentor -->
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.media }}
+                
+                <!-- User Selection -->
+                <div class="form-group mb-3">
+                    <label for="user">User</label>
+                    {{ form.user|add_class:"form-control" }}
+                </div>
+                
+                <!-- Skills Field -->
+                <div class="form-group mb-3">
+                    <label for="skills">Skills</label>
+                    {{ form.skills|add_class:"form-control" }}
+                </div>
+                
+                <!-- Experience Field -->
+                <div class="form-group mb-3">
+                    <label for="experience">Experience</label>
+                    {{ form.experience|add_class:"form-control" }}
+                </div>
+                
+                <!-- Awards and Recognitions Field -->
+                <div class="form-group mb-3">
+                    <label for="awards_and_recognitions">Awards and Recognitions</label>
+                    {{ form.awards_and_recognitions|add_class:"form-control" }}
+                </div>
+                
+                <!-- Bio Field -->
+                <div class="form-group mb-3">
+                    <label for="bio">Bio</label>
+                    {{ form.bio|add_class:"form-control" }}
+                </div>
+                
+                <!-- Profile Image Field -->
+                <div class="form-group mb-4">
+                    <label for="profile_image">Profile Image</label>
+                    {{ form.profile_image|add_class:"form-control-file" }}
+                    {% if mentor.profile_image %}
+                        <div class="mt-2">
+                            <img src="{{ mentor.profile_image.url }}" alt="Profile Image" width="100" class="img-thumbnail">
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-primary w-100">Update Mentor</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

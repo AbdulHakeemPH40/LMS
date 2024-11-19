@@ -1,0 +1,116 @@
+{% extends 'sitevisitor/base.html' %}
+{% load custom_filters %}
+{% load static %}
+
+{% block title %}Home - Modern LMS Platform{% endblock %}
+
+{% block content %}
+    <!-- Full-Screen Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content glassy-effect">
+            <h1>Unlock Your Learning Potential</h1>
+            <p><strong>Thousands of courses in programming, design, business, and more.</strong></p>
+            <a href="{% url 'sign_up' %}" class="btn btn-primary btn-lg">Get Started</a>
+        </div>
+    </section>
+
+    <!-- Featured Courses Section -->
+    <section class="courses-section py-5">
+        <div class="container text-center">
+            <h2>Featured Courses</h2>
+            <p class="lead">Explore our most popular courses</p>
+            <div class="row">
+                {% if featured_courses %}
+                    {% for course in featured_courses %}
+                        <div class="col-md-4">
+                            <div class="card course-card">
+                                {% if course.thumbnail %}
+                                    <img src="{{ course.thumbnail.url }}" alt="{{ course.title }}" class="card-img-top">
+                                {% else %}
+                                    <img src="{% static 'images/default_course_thumbnail.jpg' %}" alt="Default Thumbnail" class="card-img-top">
+                                {% endif %}
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ course.title }}</h5>
+                                    <p class="card-text">{{ course.description|truncatewords:15 }}</p>
+                                    <p><strong>Price:</strong> ₹ {{ course.price }}</p>
+                                    
+                                    <!-- Display Course Duration -->
+                                    <p>
+                                        <strong>Duration:</strong> 
+                                        {{ course.duration_value }} 
+                                        {% if course.duration_type == 'month' %}
+                                            Month(s)
+                                        {% else %}
+                                            Week(s)
+                                        {% endif %}
+                                    </p>
+                                    
+                                    <a href="{% url 'sign_up' %}" class="btn btn-primary">Enroll Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p class="text-muted">No featured courses are available at the moment. Please check back later!</p>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Meet Our Mentors Section -->
+    <section class="instructors-section light-bg-section py-5">
+        <div class="container text-center">
+            <h2>Meet Our Mentors</h2>
+            <p class="lead">Learn from industry experts</p>
+            <div class="row">
+                {% if mentors %}
+                    {% for mentor in mentors|slice:":4" %}
+                        <div class="col-md-3">
+                            {% if mentor.profile_image %}
+                                <img src="{{ mentor.profile_image.url }}" alt="{{ mentor.user.username }}" class="rounded-circle img-fluid">
+                            {% else %}
+                                <img src="{% static 'images/default_profile.png' %}" alt="Default Mentor Image" class="mentor-img me-3" width="50" height="50">
+                            {% endif %}
+                            <h5><strong>{{ mentor.user.first_name }} {{ mentor.user.last_name }} </strong> </h5>
+                                            <h5>{{ mentor.skills }} </h5>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p class="text-muted">No mentors are available at the moment. Please check back later!</p>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+    <!-- What Our Students Say Section -->
+    <section class="reviews-section py-5">
+        <div class="container text-center">
+            <h2>What Our Students Say</h2>
+            <p class="lead">Our students love learning with us!</p>
+            <div class="row">
+                {% if reviews %}
+                    {% for review in reviews|slice:":3" %}
+                        <div class="col-md-4">
+                            <div class="review-card p-4 mb-4">
+                                <p><strong>"{{ review.comment|truncatewords:20 }}"</strong></p>
+                                <p class="student-name">- {{ review.user.username }}</p>
+                                <div class="rating">
+                                    {% for i in review.rating|range_filter %}
+                                        ⭐
+                                    {% endfor %}
+
+                                    <!-- Display the empty stars -->
+                                    {% for i in 5|add:"-"|add:review.rating %}
+                                        <span class="empty-star">⭐</span>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p class="text-muted">No student reviews are available at the moment. Be the first to leave a review!</p>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

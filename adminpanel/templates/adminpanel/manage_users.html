@@ -1,0 +1,104 @@
+<!-- adminpanel/templates/adminpanel/manage_users.html -->
+
+{% extends 'adminpanel/admin_base.html' %}
+{% load static %}
+
+{% block title %}Manage Users | Admin Panel{% endblock %}
+
+{% block custom_css %}
+<link rel="stylesheet" href="{% static 'adminpanel/css/manage_user.css' %}">
+<link rel="stylesheet" href="{% static 'adminpanel/css/footer.css' %}">
+<link rel="stylesheet" href="{% static 'adminpanel/css/left_sidebar.css' %}">
+<link rel="stylesheet" href="{% static 'adminpanel/css/nav_bar.css' %}">
+<link rel="stylesheet" href="{% static 'adminpanel/css/messages.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5 pt-4">
+    <h2 class="mb-4">Manage Users</h2>
+    
+    <!-- Toggle Buttons for Filtering -->
+    <div class="btn-group mb-3" role="group">
+        <button type="button" class="btn btn-outline-primary" id="showStudents">Students</button>
+        <button type="button" class="btn btn-outline-primary" id="showMentors">Mentors</button>
+        <button type="button" class="btn btn-outline-primary" id="showAll">All</button>
+    </div>
+
+    <!-- Users Table -->
+    <div class="table-responsive">
+        <table class="table table-striped align-middle" id="usersTable">
+            <thead class="table-light">
+                <tr>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                    <tr class="{% if user.userprofile.role == 'student' %}student-row{% elif user.userprofile.role == 'mentor' %}mentor-row{% endif %}">
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.userprofile.get_role_display }}</td>
+                        <td>{{ user.userprofile.get_status_display }}</td>
+                        <td>
+                            <div class="action-buttons d-flex flex-wrap">
+                                {% if user.userprofile.status == 'active' %}
+                                    <a href="{% url 'deactivate_user' user_id=user.id %}" class="btn btn-secondary btn-sm me-2 mb-2">
+                                        <i class="fas fa-user-slash"></i> Deactivate
+                                    </a>
+                                {% else %}
+                                    <a href="{% url 'activate_user' user_id=user.id %}" class="btn btn-success btn-sm me-2 mb-2">
+                                        <i class="fas fa-user-check"></i> Activate
+                                    </a>
+                                {% endif %}
+                                <a href="{% url 'view_user' user_id=user.id %}" class="btn btn-info btn-sm mb-2">
+                                    <i class="fas fa-eye"></i> View User
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center">No users found.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- JavaScript for Filtering -->
+<script>
+    document.getElementById('showStudents').addEventListener('click', function() {
+        let rows = document.querySelectorAll('#usersTable tbody tr');
+        rows.forEach(row => {
+            if (row.classList.contains('student-row')) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    });
+
+    document.getElementById('showMentors').addEventListener('click', function() {
+        let rows = document.querySelectorAll('#usersTable tbody tr');
+        rows.forEach(row => {
+            if (row.classList.contains('mentor-row')) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    });
+
+    document.getElementById('showAll').addEventListener('click', function() {
+        let rows = document.querySelectorAll('#usersTable tbody tr');
+        rows.forEach(row => {
+            row.style.display = '';
+        });
+    });
+</script>
+{% endblock %}

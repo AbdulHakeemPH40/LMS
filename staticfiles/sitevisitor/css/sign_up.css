@@ -1,0 +1,172 @@
+/* Light Mode (default) */
+:root {
+    --primary-color: #2575fc;
+    --secondary-color: #1c03ff;
+    --background-color: #ffffff;
+    --text-color: #000000;
+    --card-background: #ffffff;
+    --navbar-background: rgba(255, 255, 255, 0.95);
+    --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Dark Mode */
+[data-theme="dark"] {
+    --primary-color: #0d6efd;
+    --secondary-color: #1e3a8a;
+    --background-color: #121212;
+    --text-color: #ffffff;
+    --card-background: #1e1e1e;
+    --navbar-background: rgba(0, 0, 0, 0.95);
+    --shadow-color: rgba(0, 0, 0, 0.5);
+}
+
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+.navbar {
+    background-color: var(--navbar-background); /* Navbar adapts to theme */
+    box-shadow: 0 4px 12px var(--shadow-color); /* Soft shadow */
+    backdrop-filter: blur(10px); /* Subtle blur effect */
+}
+
+.navbar-brand {
+    font-weight: bold;
+    color: var(--navbar-text-color); /* Brand adapts to theme */
+    
+}
+.navbar-brand:hover {
+    color: var(--navbar-hover-color); /* Change color on hover */
+    text-decoration: none; /* Remove underline on hover */
+    transition: color 0.3s ease-in-out; /* Ensure smooth transition */
+}
+
+.navbar-nav .nav-link {
+    font-size: 16px;
+    color: var(--navbar-text-color); /* Links adapt to theme */
+    transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link.active {
+    font-weight: bold;
+    color: var(--primary-color); /* Active link color */
+}
+
+.navbar-nav .nav-link:hover {
+    color: var(--primary-color); /* Hover color remains primary */
+}
+
+.navbar-nav .btn {
+    color: var(--navbar-text-color); /* Button text adapts to theme */
+    border-color: var(--navbar-text-color); /* Button border adapts */
+}
+
+.navbar-nav .btn:hover {
+    background-color: var(--primary-color); /* Button background on hover */
+    color: #fff;
+    border-color: var(--primary-color);
+}
+
+
+/* Sign Up Section with Background */
+.signup-section {
+    background-image: url('https://images.pexels.com/photos/3184652/pexels-photo-3184652.jpeg?auto=compress&cs=tinysrgb&w=1600');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    position: relative;
+    margin-top: 25px;
+}
+
+.signup-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+.signup-section h2{
+    position: relative;
+    z-index: 2;
+    color: white;
+}
+
+.signup-section p {
+    position: relative;
+    z-index: 2;
+    color: var(--text-color);
+}
+
+.signup-form {
+    background-color: var(--card-background);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px var(--shadow-color);
+    position: relative;
+    z-index: 2;
+}
+
+.signup-form .form-control {
+    border-radius: 5px;
+    padding: 15px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    box-shadow: none;
+}
+
+.signup-form .form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 5px rgba(37, 117, 252, 0.5);
+}
+
+.signup-form .btn {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.signup-form .btn:hover {
+    background-color: var(--secondary-color);
+}
+
+.signup-form .text-center p a {
+    color: var(--primary-color);
+}
+
+.signup-form .text-center p a:hover {
+    color: var(--secondary-color);
+}
+
+.footer {
+    padding: 15px 0;
+    text-align: center;
+    box-shadow: 0 -2px 8px var(--shadow-color); /* Softer shadow */
+    font-size: 14px;
+}
+
+.footer .social-icons {
+    margin-top: 10px;
+}
+
+.footer .social-icons a {
+    color:white;
+    margin: 0 10px;
+    font-size: 20px;
+    transition: color 0.3s;
+}
+
+
+.footer .social-icons a:hover {
+    color: var(--primary-color); /* Hover effect for social icons */
+}

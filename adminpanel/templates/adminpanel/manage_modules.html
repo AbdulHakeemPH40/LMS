@@ -1,0 +1,43 @@
+{% extends 'adminpanel/admin_base.html' %}
+
+{% block title %}Manage Modules | Admin Panel{% endblock %}
+
+{% block content %}
+<div class="container mt-5 pt-4">
+    <h2 class="text-center mb-4">Manage Modules</h2>
+
+    <!-- Courses List -->
+    <div class="mb-4">
+        <h4>Select a Course to Manage Modules</h4>
+        {% if courses %}
+            <ul class="list-group">
+                {% for course in courses %}
+                    <li class="list-group-item">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span>{{ course.title }}</span>
+                            <a href="{% url 'add_module' course.id %}" class="btn btn-primary">Create Module</a>
+                        </div>
+
+                        <!-- Modules List for the specific course -->
+                        <ul class="list-group mt-2">
+                            {% for module in course.modules.all %}
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    {{ module.title }}
+                                    <div>
+                                        <a href="{% url 'edit_module' module.id %}" class="btn btn-warning btn-sm">Edit</a>
+                                        <a href="{% url 'delete_module' module.id %}" class="btn btn-danger btn-sm">Delete</a> <!-- Corrected URL -->
+                                    </div>
+                                </li>
+                            {% empty %}
+                                <li class="list-group-item text-center">No modules available for this course. Please create a module.</li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No courses available. Please create a new course.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

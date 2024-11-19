@@ -1,0 +1,101 @@
+{% extends 'studentpanel/student_base.html' %}
+{% load static %}
+
+<title>
+{% block title %}Home | Modern LMS Platform{% endblock %}
+</title>
+
+{% block content %}
+    <!-- Hero Section (Promo Carousel) -->
+    {% if promotions.exists %}
+    <section class="promo-section mb-4">
+        <div id="promoCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="10000">
+            <div class="carousel-inner">
+                {% for promo in promotions %}
+                <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                    <div class="hero-content d-flex flex-column justify-content-center align-items-center text-center">
+                        <h1>{{ promo.title }}</h1>
+                        <p><strong>{{ promo.description }}</strong></p>
+
+                        <!-- Redirect logic based on purchase status -->
+                        {% if promo.course.id in enrolled_course_ids %}
+                            <!-- If the user is enrolled in the course, redirect to My Courses -->
+                            <a href="{% url 'my_courses' promo.course.id %}" class="btn btn-primary btn-lg">{{ promo.button_text }}</a>
+                        {% else %}
+                            <!-- If not enrolled, redirect to Explore Course -->
+                            <a href="{% url 'explore_course' promo.course.id %}" class="btn btn-primary btn-lg">{{ promo.button_text }}</a>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#promoCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#promoCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </section>
+    {% endif %}
+
+    <!-- My Courses Section -->
+    <div class="container dashboard-content">
+        <section class="my-courses mb-5">
+            <h2 class="section-title">My Courses</h2>
+            {% if my_courses.exists %}
+                <div class="courses-wrapper position-relative">
+                    <div class="courses-container d-flex flex-row overflow-auto">
+                        {% for course in my_courses %}
+                            <div class="card course-card me-3">
+                                <img src="{{ course.thumbnail.url }}" class="card-img-top" alt="{{ course.title }}">
+                                <div class="card-body">
+                                    <h5 class="card-title-center" style="text-align:center"> <strong> {{ course.title }} </strong> </h5>
+                                    <br>
+                                    <a href="{% url 'my_courses' course.id %}" class="btn btn-primary">Continue Learning</a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% else %}
+                <p class="text-center text-muted">No courses available</p>
+            {% endif %}
+        </section>
+
+        <!-- Explore Courses Section -->
+        <section class="explore-courses">
+            <h2 class="section-title">Explore Courses</h2>
+            <div class="row">
+                {% if explore_courses.exists %}
+                    {% for course in explore_courses %}
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            <div class="card course-card">
+                                <img src="{{ course.thumbnail.url }}" class="card-img-top" alt="{{ course.title }}">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ course.title }}</h5>
+                                    <p class="card-text">{{ course.description|truncatewords:20 }}</p>
+                                    <!-- Keep "Enroll Now" button linked to course_detail or checkout as needed -->
+                                    <a href="{% url 'course_detail' course.id %}" class="btn btn-outline-primary">Enroll Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p class="text-center text-muted">No courses available to explore</p>
+                {% endif %}
+            </div>
+        </section>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'));
+            var dropdownList = dropdownElementList.map(function (dropdownToggleEl) {
+                return new bootstrap.Dropdown(dropdownToggleEl);
+            });
+        });
+        
+    </script>
+{% endblock %}

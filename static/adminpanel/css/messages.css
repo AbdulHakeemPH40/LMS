@@ -1,0 +1,94 @@
+/* Messages Container Styles */
+.messages-container {
+    position: fixed;
+    top: 50px;
+    right: 20px;
+    z-index: 1050;
+    width: auto;
+    max-width: 300px;
+    transition: all 0.3s ease-in-out; /* Smooth transition for layout changes */
+}
+
+/* General Alert Styling */
+.messages .alert {
+    padding: 10px; /* Increase padding for better spacing */
+    font-size: 0.9rem;
+    border-radius: 4px;
+    color: #155724;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid transparent;
+    margin-bottom: 10px; /* Add spacing between alerts */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add slight shadow */
+}
+
+/* Success Alert Styling */
+.alert-success {
+    color: #155724;
+    background-color: #b8f1c5;
+    border-color: #c3e6cb;
+}
+
+/* Close Button Styling */
+.alert .btn-close {
+    color: #155724;
+    opacity: 0.8;
+    font-size: 1rem;
+    margin-left: auto; /* Moves the close button to the end of the alert */
+    cursor: pointer; /* Pointer cursor for better UX */
+}
+
+/* Adjust close button position within alert */
+.alert-dismissible .btn-close {
+    position: relative; /* Ensure it doesn't overlay other content */
+    margin-left: 10px;
+}
+
+/* Alert Background */
+.alert {
+    background-color: var(--card-background);
+    color: var(--text-color);
+    border: 1px solid var(--shadow-color);
+    transition: all 0.3s ease; /* Smooth transitions for changes */
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .messages-container {
+        top: 10px; /* Adjust top position for smaller screens */
+        right: 10px; /* Reduce right margin */
+        max-width: 250px; /* Narrower alert width */
+        
+    }
+
+    .messages .alert {
+        font-size: 0.8rem; /* Smaller font size */
+        padding: 8px; /* Reduce padding */
+        margin-bottom: 8px; /* Smaller spacing between alerts */
+        top: 50px;
+    }
+
+    .alert .btn-close {
+        font-size: 0.8rem; /* Smaller close button */
+    }
+}
+
+@media (max-width: 576px) {
+    .messages-container {
+        top: 5px; /* Further adjust top position */
+        right: 5px; /* Narrower margin for extra-small screens */
+        max-width: 200px; /* Compact alert width */
+    }
+
+    .messages .alert {
+        font-size: 0.75rem; /* Even smaller font size */
+        padding: 6px; /* Further reduce padding */
+        margin-bottom: 6px; /* Compact spacing */
+        top: 50px;
+    }
+
+    .alert .btn-close {
+        font-size: 0.7rem; /* Smallest close button size */
+    }
+}

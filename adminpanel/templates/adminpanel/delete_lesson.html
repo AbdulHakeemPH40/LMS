@@ -1,0 +1,23 @@
+<!-- adminpanel/templates/adminpanel/delete_lesson.html -->
+{% extends 'adminpanel/admin_base.html' %}
+{% load static %}
+
+{% block title %}Delete Lesson | Admin Panel{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card text-center">
+        <div class="card-body">
+            <h2 class="card-title text-danger mb-4">Confirm Lesson Deletion</h2>
+            <p class="card-text">
+                Are you sure you want to delete the lesson "<strong>{{ lesson.title }}</strong>"? This action cannot be undone.
+            </p>
+            <form method="POST" class="d-inline-block">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger me-2">Yes, Delete</button>
+                <a href="{% url 'admin_view_course' course_id=lesson.module.course.id %}" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

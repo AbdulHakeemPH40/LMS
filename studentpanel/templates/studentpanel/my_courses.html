@@ -1,0 +1,338 @@
+<!-- studentpanel/templates/studentpanel/course_detail.html -->
+{% extends 'studentpanel/student_base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %}{{ course.title }} | Modern LMS Platform{% endblock %}
+
+{% block custom_css %}
+<link rel="stylesheet" href="{% static 'studentpanel/css/student_course.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+<style>
+    .comment-user-img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 10px;
+    }
+    .star-rating {
+        font-size: 1.5em;
+        color: #ddd;
+        cursor: pointer;
+    }
+    .star-rating .fa-star {
+        color: #ffc107;
+    }
+    /* Responsive adjustments */
+    @media (max-width: 576px) {
+        .mentor-img {
+            width: 40px;
+            height: 40px;
+        }
+        .course-description h4 {
+            font-size: 1.2rem;
+        }
+        .course-description p {
+            font-size: 0.9rem;
+        }
+        .video-player iframe,
+        .video-player video {
+            height: auto !important;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <!-- Left Section: Video Player & Details -->
+        <div class="col-lg-8 col-12 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <!-- Course Title and Mentor Info -->
+                    <h1>{{ course.title }}</h1>
+                    <div class="course-mentor d-flex align-items-center my-3">
+                        {% if course.mentor.user.mentor_profile.profile_image %}
+                            <img src="{{ course.mentor.user.mentor_profile.profile_image.url }}" alt="Mentor" class="mentor-img me-3" width="50" height="50">
+                        {% else %}
+                            {% if course.mentor.profile_image %}
+                                <img src="{{ course.mentor.profile_image.url }}" alt="Mentor" class="mentor-img me-3" width="50" height="50">
+                            {% else %}
+                                <img src="{% static 'images/default_profile.png' %}" alt="Default Mentor Image" class="mentor-img me-3" width="50" height="50">
+                            {% endif %}
+                        {% endif %}
+                        <div>
+                            <p class="mb-0">Mentor: <strong>{{ course.mentor.get_full_name }}</strong></p>
+                            <p class="mb-0 text-muted">Last updated: {{ course.updated_at|date:"F Y" }}</p>
+                        </div>
+                    </div>
+
+                    <!-- Video Player Section -->
+                    <div class="video-player mb-4">
+                        {% if current_video_embed_url %}
+                            {% if current_video.video_type == 'youtube' %}
+                                <div class="ratio ratio-16x9">
+                                    <iframe id="courseVideoPlayer"
+                                            src="{{ current_video_embed_url }}"
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                            allowfullscreen class="w-100 h-100"></iframe>
+                                </div>
+                            {% elif current_video.video_type == 'local' %}
+                                <div class="ratio ratio-16x9">
+                                    <video id="courseVideoPlayer" controls autoplay class="w-100 h-100">
+                                        <source src="{{ current_video_embed_url }}" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                </div>
+                            {% else %}
+                                <p>Unknown video type.</p>
+                            {% endif %}
+                        {% else %}
+                            <p style="color:white";>No video selected. Please choose a video from the list.</p>
+                        {% endif %}
+                    </div>
+
+                    <!-- Course Description -->
+                    <div class="course-description mb-4">
+                        <h4>Course Description</h4>
+                        <p>{{ course.description }}</p>
+                    </div>
+
+                    <!-- Review Form -->
+                    <section class="reviews-section py-5">
+                        <div class="container">
+                            <h3>Leave a Review</h3>
+                            <form method="post" action="{% url 'add_review' course.id %}">
+                                {% csrf_token %}
+                                {{ review_form.non_field_errors }}
+                                <div class="mb-3">
+                                    <label for="rating" class="form-label">Rating</label>
+                                    <div id="starRating" class="star-rating">
+                                        {% for i in "12345" %}
+                                            <i class="fas fa-star" data-value="{{ forloop.counter }}"></i>
+                                        {% endfor %}
+                                    </div>
+                                    {{ review_form.rating }}
+                                    {{ review_form.rating.errors }}
+                                </div>
+                                <div class="mb-3">
+                                    {{ review_form.comment.label_tag }}
+                                    {{ review_form.comment }}
+                                    {{ review_form.comment.errors }}
+                                </div>
+                                <button type="submit" name="submit_review" class="btn btn-success">Submit Review</button>
+                            </form>
+                        </div>
+                    </section>
+
+                    <!-- Comments Section -->
+                    <section class="comments-section py-5">
+                        <div class="container">
+                            <h4>Comments</h4>
+                            <form method="post" action="{% url 'add_comment' course.id %}" id="commentForm">
+                                {% csrf_token %}
+                                {{ comment_form.non_field_errors }}
+                                <div class="mb-3">
+                                    {{ comment_form.message.label_tag }}
+                                    {{ comment_form.message }}
+                                    {{ comment_form.message.errors }}
+                                </div>
+                                <button type="submit" name="submit_comment" class="btn btn-primary mt-2">Post Comment</button>
+                            </form>
+
+                            <!-- Comments List -->
+                            <ul class="list-group mt-3" id="commentsList">
+                                {% for comment in comments %}
+                                    <li class="list-group-item">
+                                        <div class="d-flex">
+                                            {% if comment.user.userprofile.profile_image %}
+                                                <img src="{{ comment.user.userprofile.profile_image.url }}" alt="{{ comment.user.get_full_name }}" class="comment-user-img">
+                                            {% else %}
+                                                <img src="{% static 'images/default_profile.png' %}" alt="Default Profile" class="comment-user-img">
+                                            {% endif %}
+                                            <div>
+                                                <strong>{{ comment.user.get_full_name }}</strong>
+                                                <p>{{ comment.message }}</p>
+                                                <small class="text-muted">Posted on {{ comment.posted_at|date:"F j, Y, g:i a" }}</small>
+                                            </div>
+                                            {% if comment.user == request.user %}
+                                                <div class="ms-auto">
+                                                    <a href="{% url 'edit_comment' comment.id %}" class="btn btn-sm btn-outline-secondary me-2">Edit</a>
+                                                    <a href="{% url 'delete_comment' comment.id %}" class="btn btn-sm btn-outline-danger">Delete</a>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    </li>
+                                {% empty %}
+                                    <li class="list-group-item">No comments yet. Be the first to comment!</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </section>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Sidebar: Tabs for Lessons and Resources -->
+        <div class="col-lg-4 col-12">
+            <div class="sidebar p-3">
+                <!-- Nav Tabs -->
+                <ul class="nav nav-tabs justify-content-center mb-3" id="courseSidebarTabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="lessons-tab" data-bs-toggle="tab" href="#lessons" role="tab" aria-controls="lessons" aria-selected="true">Lessons</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="resources-tab" data-bs-toggle="tab" href="#resources" role="tab" aria-controls="resources" aria-selected="false">Resources</a>
+                    </li>
+                </ul>
+                <!-- Tab Content -->
+                <div class="tab-content mt-3" id="sidebarTabContent">
+                    <!-- Lessons Tab -->
+                    <div class="tab-pane fade show active" id="lessons" role="tabpanel" aria-labelledby="lessons-tab">
+                        <div class="accordion" id="lessonAccordion">
+                            {% if modules %}
+                                {% for module in modules %}
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="moduleHeading{{ module.id }}">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#moduleCollapse{{ module.id }}" aria-expanded="false" aria-controls="moduleCollapse{{ module.id }}">
+                                                {{ module.title }}
+                                            </button>
+                                        </h2>
+                                        <div id="moduleCollapse{{ module.id }}" class="accordion-collapse collapse" aria-labelledby="moduleHeading{{ module.id }}" data-bs-parent="#lessonAccordion">
+                                            <div class="accordion-body">
+                                                {% for lesson in module.lessons.all %}
+                                                    <div class="mb-3">
+                                                        <h5 class="mb-2">{{ lesson.title }}</h5>
+                                                        <div class="d-flex flex-column">
+                                                            {% for video in lesson.lesson_videos.all %}
+                                                                <div class="d-flex align-items-center border rounded p-2 mb-2 {% if video.id in completed_video_ids %}bg-light{% endif %}">
+                                                                    <span class="me-auto fw-bold">
+                                                                        {{ video.title }}
+                                                                        {% if video.id in completed_video_ids %}
+                                                                            <i class="fas fa-check-circle text-success"></i>
+                                                                        {% endif %}
+                                                                    </span>
+                                                                    <button onclick="playVideo('{{ video.get_video_src }}', '{{ video.video_type }}', {{ video.id }});" class="btn btn-primary btn-sm">
+                                                                        Play
+                                                                    </button>
+                                                                </div>
+                                                            {% endfor %}
+                                                        </div>
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                <p class="text-center">No modules available for this course.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <!-- Resources Tab -->
+                    <div class="tab-pane fade" id="resources" role="tabpanel" aria-labelledby="resources-tab">
+                        <h5>Course Resources</h5>
+                        {% if course.resources.exists %}
+                            <ul class="list-group">
+                                {% for resource in course.resources.all %}
+                                    <li class="list-group-item">
+                                        <a href="{{ resource.file.url }}" download>{{ resource.title }}</a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p>No resources available for this course.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript for Video Playback and Star Ratings -->
+    <script>
+        function playVideo(videoSrc, videoType, videoId) {
+            const playerContainer = document.querySelector('.video-player');
+            playerContainer.innerHTML = ''; // Clear existing content
+
+            if (videoType === 'local') {
+                const videoElement = document.createElement('video');
+                videoElement.id = 'courseVideoPlayer';
+                videoElement.classList.add('w-100', 'h-100');
+                videoElement.controls = true;
+                videoElement.autoplay = true;
+                videoElement.setAttribute('controlsList', 'nodownload');
+
+                const source = document.createElement('source');
+                source.src = videoSrc;
+                source.type = 'video/mp4';
+
+                videoElement.appendChild(source);
+
+                const ratioDiv = document.createElement('div');
+                ratioDiv.classList.add('ratio', 'ratio-16x9');
+                ratioDiv.appendChild(videoElement);
+
+                playerContainer.appendChild(ratioDiv);
+            } else if (videoType === 'youtube') {
+                let embedUrl = videoSrc;
+                // Ensure it's an embed URL
+                if (videoSrc.includes('youtu.be')) {
+                    embedUrl = videoSrc.replace('youtu.be/', 'www.youtube.com/embed/');
+                } else if (videoSrc.includes('watch?v=')) {
+                    embedUrl = videoSrc.replace('watch?v=', 'embed/');
+                }
+                // Remove any additional parameters
+                embedUrl = embedUrl.split('&')[0];
+
+                const iframe = document.createElement('iframe');
+                iframe.id = 'courseVideoPlayer';
+                iframe.src = embedUrl;
+                iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+                iframe.allowFullscreen = true;
+                iframe.classList.add('w-100', 'h-100');
+
+                const ratioDiv = document.createElement('div');
+                ratioDiv.classList.add('ratio', 'ratio-16x9');
+                ratioDiv.appendChild(iframe);
+
+                playerContainer.appendChild(ratioDiv);
+            } else {
+                const errorMsg = document.createElement('p');
+                errorMsg.textContent = 'Unknown video type.';
+                playerContainer.appendChild(errorMsg);
+            }
+
+            // Update the URL without reloading the page
+            if (history.pushState) {
+                const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?video_id=' + videoId;
+                window.history.pushState({ path: newUrl }, '', newUrl);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const stars = document.querySelectorAll('#starRating .fa-star');
+            const ratingInput = document.querySelector('input[name="rating"]');
+
+            stars.forEach(function(star) {
+                star.addEventListener('click', function() {
+                    const rating = this.getAttribute('data-value');
+                    ratingInput.value = rating;
+                    stars.forEach(function(s) {
+                        if (s.getAttribute('data-value') <= rating) {
+                            s.classList.add('fas');
+                            s.classList.remove('far');
+                        } else {
+                            s.classList.add('far');
+                            s.classList.remove('fas');
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+</div>
+{% endblock %}

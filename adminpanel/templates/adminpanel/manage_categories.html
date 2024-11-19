@@ -1,0 +1,79 @@
+<!-- adminpanel/templates/adminpanel/manage_categories.html -->
+{% extends 'adminpanel/admin_base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %}Manage Categories | Admin Panel{% endblock %}
+
+{% block custom_css %}
+<link rel="stylesheet" href="{% static 'adminpanel/css/manage_category.css' %}">
+<link rel="stylesheet" href="{% static 'adminpanel/css/footer.css' %}">
+<link rel="stylesheet" href="{% static 'adminpanel/css/left_sidebar.css' %}">
+<link rel="stylesheet" href="{% static 'adminpanel/css/nav_bar.css' %}">
+<link rel="stylesheet" href="{% static 'adminpanel/css/messages.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="main-content">
+    <div class="container-fluid mt-4">
+        <!-- Header Section -->
+        <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
+            <h2 class="mb-3 mb-md-0"><i class="bi bi-tags-fill me-2"></i> Manage Categories</h2>
+            <a href="{% url 'create_category' %}" class="btn btn-primary d-flex align-items-center">
+                <i class="bi bi-plus-circle me-2"></i> Create New Category
+            </a>
+        </div>
+
+        <!-- Categories Table -->
+        <div class="card shadow-sm">
+            <div class="card-body p-4">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Name</th>
+                                <th scope="col" class="d-none d-lg-table-cell">Description</th>
+                                <th scope="col" class="text-center">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for category in categories %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td class="fw-bold">{{ category.name }}</td>
+                                    <td class="d-none d-lg-table-cell">{{ category.description|truncatewords:20 }}</td>
+                                    <td class="text-center">
+                                        <div class="d-flex justify-content-center">
+                                            <a href="{% url 'edit_category' category_id=category.id %}" class="btn btn-sm btn-outline-warning me-2" data-bs-toggle="tooltip" title="Edit Category">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </a>
+                                            <a href="{% url 'delete_category' category_id=category.id %}" class="btn btn-sm btn-outline-danger" data-bs-toggle="tooltip" title="Delete Category">
+                                                <i class="bi bi-trash-fill"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% empty %}
+                                <tr>
+                                    <td colspan="4" class="text-center">No categories available.</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block extra_scripts %}
+<script>
+    // Initialize Bootstrap tooltips
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+</script>
+{% endblock %}
+{% endblock %}

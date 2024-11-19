@@ -1,0 +1,94 @@
+<!-- adminpanel/templates/adminpanel/view_course.html -->
+{% extends 'adminpanel/admin_base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %}View Course | Admin Panel{% endblock %}
+
+{% block content %}
+<div class="container mt-5 pt-4">
+    <div class="card shadow-sm p-4 mb-5 bg-white rounded">
+        <h2 class="mb-4 text-center text-md-start">{{ course.title }}</h2>
+        <div class="row">
+            <div class="col-md-4 mb-3 mb-md-0">
+                <img src="{{ course.thumbnail.url }}" alt="{{ course.title }}" class="img-fluid rounded">
+            </div>
+            <div class="col-md-8">
+                <p>{{ course.description }}</p>
+                <p><strong>Category:</strong> {{ course.category.name }}</p>
+                <p><strong>Price:</strong> ₹ {{ course.price }}</p>
+                <p><strong>Status:</strong> {{ course.status }}</p>
+                <div class="mt-3 d-flex flex-wrap">
+                    <a href="{% url 'edit_course' course_id=course.id %}" class="btn btn-warning me-2 mb-2">
+                        <i class="fas fa-edit"></i> Edit Course
+                    </a>
+                    <a href="{% url 'delete_course' course_id=course.id %}" class="btn btn-danger mb-2">
+                        <i class="fas fa-trash-alt"></i> Delete Course
+                    </a>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <!-- Modules Section -->
+        <div class="modules-section mt-4">
+            <h3 class="text-center text-md-start">Modules</h3>
+            <a href="{% url 'add_module' course_id=course.id %}" class="btn btn-primary mb-3">
+                <i class="fas fa-plus"></i> Add Module
+            </a>
+            {% for module in modules %}
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center">
+                            <h5 class="mb-2 mb-md-0">{{ module.title }}</h5>
+                            <div class="d-flex flex-wrap">
+                                <a href="{% url 'edit_module' module_id=module.id %}" class="btn btn-sm btn-warning me-2 mb-2">
+                                    <i class="fas fa-edit"></i> Edit
+                                </a>
+                                <a href="{% url 'delete_module' module_id=module.id %}" class="btn btn-sm btn-danger mb-2">
+                                    <i class="fas fa-trash-alt"></i> Delete
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p>{{ module.description }}</p>
+                        <p><strong>Order:</strong> {{ module.order }}</p>
+                        <a href="{% url 'add_lesson' module_id=module.id %}" class="btn btn-primary btn-sm mb-3">
+                            <i class="fas fa-plus"></i> Add Lesson
+                        </a>
+                        {% if module.lessons.all %}
+                            <ul class="list-group">
+                                {% for lesson in module.lessons.all %}
+                                    <li class="list-group-item">
+                                        <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center">
+                                            <div class="mb-2 mb-md-0">
+                                                <strong>{{ lesson.title }}</strong>
+                                                <p class="mb-1">{{ lesson.description }}</p>
+                                            </div>
+                                            <div class="d-flex flex-wrap">
+                                                <a href="{% url 'edit_lesson' lesson_id=lesson.id %}" class="btn btn-sm btn-warning me-2 mb-2">
+                                                    <i class="fas fa-edit"></i> Edit
+                                                </a>
+                                                <a href="{% url 'delete_lesson' lesson_id=lesson.id %}" class="btn btn-sm btn-danger me-2 mb-2">
+                                                    <i class="fas fa-trash-alt"></i> Delete
+                                                </a>
+                                                <a href="{% url 'add_video' lesson_id=lesson.id %}" class="btn btn-sm btn-primary mb-2">
+                                                    <i class="fas fa-video"></i> Add Video
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p>No lessons added yet.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            {% empty %}
+                <p>No modules added yet.</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
